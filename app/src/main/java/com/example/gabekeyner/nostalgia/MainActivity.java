@@ -1,6 +1,5 @@
 package com.example.gabekeyner.nostalgia;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -10,7 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public RecyclerView recyclerView;
 
     private final String image_names[] = {
             "Donut",
@@ -56,12 +59,6 @@ public class MainActivity extends AppCompatActivity
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg"
     };
 
@@ -71,6 +68,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,21 +98,24 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-
-        ArrayList<Image> images = prepareData();
-        Adapter mAdapter = new Adapter(getApplicationContext(), images);
+//        recyclerView.setItemAnimator(DefaultItemAnimator);
+        ArrayList<ImageHelper> imageHelpers = prepareData();
+//        ArrayList<ImageHelper> images = prepareData();
+        Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
     }
-    private ArrayList<Image> prepareData(){
-        ArrayList<Image> images = new ArrayList<>();
-        for(int i=0; i < image_names.length; i++){
-            Image image = new Image();
-            image.setImage_name(image_names[i]);
-            image.setImage_url(image_urls[i]);
-            images.add(image);
+    private ArrayList<ImageHelper> prepareData() {
+        ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
+        for (int i = 0; i < image_names.length; i++) {
+            ImageHelper imageHelper = new ImageHelper();
+            imageHelper.setImageHelper_name(image_names[i]);
+            imageHelper.setImageHelper_url(image_urls[i]);
+            imageHelpers.add(imageHelper);
+
         }
-        return images;
+        return imageHelpers;
     }
+
 
     @Override
     public void onBackPressed() {
@@ -134,30 +136,27 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //LAYOUTS & ORIENTATIONS
-//        switch (id) {
-//            case R.id.linearViewVertical:
-//                LinearLayoutManager mLinearLayoutManagerVertical = new LinearLayoutManager(this);
-//                mLinearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-//                recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
-//                break;
-//            case R.id.gridView:
-//                GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, 2);
-//                recyclerView.setLayoutManager(mGridLayoutManager);
-//                break;
-//            case R.id.staggeredViewVertical:
-//                StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//                recyclerView.setLayoutManager(mStaggeredVerticalLayoutManager);
-//                break;
-////            noinspection SimplifiableIfStatement
-////            if (id == R.id.action_settings) {
-////                return true;
-////            }
-//        }
+        switch (id) {
+            case R.id.linearViewVertical:
+                LinearLayoutManager mLinearLayoutManagerVertical = new LinearLayoutManager(this);
+                mLinearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
+                break;
+            case R.id.gridView:
+                GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, 2);
+                recyclerView.setLayoutManager(mGridLayoutManager);
+                break;
+            case R.id.staggeredViewVertical:
+                StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(mStaggeredVerticalLayoutManager);
+                break;
+//            noinspection SimplifiableIfStatement
+//            if (id == R.id.action_settings) {
+//                return true;
+//            }
+        }
             return super.onOptionsItemSelected(item);
         }
 
