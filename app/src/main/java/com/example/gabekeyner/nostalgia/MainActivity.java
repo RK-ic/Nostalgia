@@ -1,6 +1,5 @@
 package com.example.gabekeyner.nostalgia;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -60,12 +59,6 @@ public class MainActivity extends AppCompatActivity
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
-            "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg",
             "http://ia.media-imdb.com/images/M/MV5BMTUzNDY0NjY4Nl5BMl5BanBnXkFtZTgwNjY4MTQ0NzE@._V1_.jpg"
     };
 
@@ -106,20 +99,23 @@ public class MainActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 //        recyclerView.setItemAnimator(DefaultItemAnimator);
-        ArrayList<Image> images = prepareData();
-        Adapter mAdapter = new Adapter(getApplicationContext(), images);
+        ArrayList<ImageHelper> imageHelpers = prepareData();
+//        ArrayList<ImageHelper> images = prepareData();
+        Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
     }
-    private ArrayList<Image> prepareData(){
-        ArrayList<Image> images = new ArrayList<>();
-        for(int i=0; i < image_names.length; i++){
-            Image image = new Image();
-            image.setImage_name(image_names[i]);
-            image.setImage_url(image_urls[i]);
-            images.add(image);
+    private ArrayList<ImageHelper> prepareData() {
+        ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
+        for (int i = 0; i < image_names.length; i++) {
+            ImageHelper imageHelper = new ImageHelper();
+            imageHelper.setImageHelper_name(image_names[i]);
+            imageHelper.setImageHelper_url(image_urls[i]);
+            imageHelpers.add(imageHelper);
+
         }
-        return images;
+        return imageHelpers;
     }
+
 
     @Override
     public void onBackPressed() {
