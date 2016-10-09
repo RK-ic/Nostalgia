@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-
+//        recyclerView.setItemAnimator(DefaultItemAnimator);
         ArrayList<Image> images = prepareData();
         Adapter mAdapter = new Adapter(getApplicationContext(), images);
         recyclerView.setAdapter(mAdapter);
