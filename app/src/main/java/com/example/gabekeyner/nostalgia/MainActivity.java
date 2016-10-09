@@ -9,7 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +21,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public RecyclerView recyclerView;
 
     private final String image_names[] = {
             "Donut",
@@ -70,6 +74,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -133,30 +139,27 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //LAYOUTS & ORIENTATIONS
-//        switch (id) {
-//            case R.id.linearViewVertical:
-//                LinearLayoutManager mLinearLayoutManagerVertical = new LinearLayoutManager(this);
-//                mLinearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
-//                recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
-//                break;
-//            case R.id.gridView:
-//                GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, 2);
-//                recyclerView.setLayoutManager(mGridLayoutManager);
-//                break;
-//            case R.id.staggeredViewVertical:
-//                StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//                recyclerView.setLayoutManager(mStaggeredVerticalLayoutManager);
-//                break;
-////            noinspection SimplifiableIfStatement
-////            if (id == R.id.action_settings) {
-////                return true;
-////            }
-//        }
+        switch (id) {
+            case R.id.linearViewVertical:
+                LinearLayoutManager mLinearLayoutManagerVertical = new LinearLayoutManager(this);
+                mLinearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
+                break;
+            case R.id.gridView:
+                GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, 2);
+                recyclerView.setLayoutManager(mGridLayoutManager);
+                break;
+            case R.id.staggeredViewVertical:
+                StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(mStaggeredVerticalLayoutManager);
+                break;
+//            noinspection SimplifiableIfStatement
+//            if (id == R.id.action_settings) {
+//                return true;
+//            }
+        }
             return super.onOptionsItemSelected(item);
         }
 
