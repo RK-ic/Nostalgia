@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
+
 
     private final String image_names[] = {
             "Donut",
@@ -98,11 +100,10 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setItemAnimator(DefaultItemAnimator);
         ArrayList<ImageHelper> imageHelpers = prepareData();
-//        ArrayList<ImageHelper> images = prepareData();
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
     private ArrayList<ImageHelper> prepareData() {
         ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
@@ -115,7 +116,6 @@ public class MainActivity extends AppCompatActivity
         }
         return imageHelpers;
     }
-
 
     @Override
     public void onBackPressed() {
