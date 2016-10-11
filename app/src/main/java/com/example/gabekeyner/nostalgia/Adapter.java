@@ -16,6 +16,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private ArrayList<ImageHelper> images;
     private Context context;
 
+    int previousPosition = 0;
+
     public Adapter(Context context, ArrayList<ImageHelper> images) {
         this.images = images;
         this.context = context;
@@ -32,6 +34,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
         holder.mTextView.setText(images.get(position).getImageHelper_name());
         Picasso.with(context).load(images.get(position).getImageHelper_url()).into(holder.mImageView);
+        //FOR ANIMATION
+        if(position > previousPosition){
+            //We are scrolling down
+            AnimationUtil.animate(holder, true);
+        }else { //We are scrolling up
+            AnimationUtil.animate(holder, false);
+        }
+        previousPosition = position;
     }
 
 
