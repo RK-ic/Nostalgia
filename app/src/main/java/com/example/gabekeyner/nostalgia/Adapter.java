@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -31,7 +32,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(Adapter.ViewHolder holder, final int position) {
         holder.mTextView.setText(images.get(position).getImageHelper_name());
         Picasso.with(context).load(images.get(position).getImageHelper_url()).into(holder.mImageView);
         //FOR ANIMATION
@@ -42,6 +43,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             AnimationUtil.animate(holder, false);
         }
         previousPosition = position;
+
+        holder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "on click position" + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.mImageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(context, "on long clickposition" + position, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
 
