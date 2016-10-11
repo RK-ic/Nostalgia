@@ -24,15 +24,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         this.context = context;
     }
 
-
     @Override
     public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
         return new ViewHolder(itemView);
+
     }
 
     @Override
-    public void onBindViewHolder(Adapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final Adapter.ViewHolder holder, final int position) {
         holder.mTextView.setText(images.get(position).getImageHelper_name());
         Picasso.with(context).load(images.get(position).getImageHelper_url()).into(holder.mImageView);
         //FOR ANIMATION
