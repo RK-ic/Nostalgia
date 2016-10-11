@@ -1,5 +1,5 @@
 # Nostalgia
-<img src ="https://github.com/Keyner32/Nostalgia/blob/master/ic_launcher-web.png?raw=true" alt="Pin Icon" width="200" height="200">
+<img src ="https://github.com/Keyner32/Nostalgia/blob/master/Nostalgia_icon_final.png?raw=true" alt="Pin Icon" width="200" height="200">
 
 
 ## Motivation
@@ -26,7 +26,7 @@ Nostalgia : a sentimental longing or wistful affection for the past, typically f
 ## Prototypes
 
 
-<img src ="https://github.com/Keyner32/Nostalgia/blob/master/Nostalgia%20.png" alt="First Page"  width="500" height="400"> 
+<img src ="https://github.com/Keyner32/Nostalgia/blob/master/Nostalgia%20.png" alt="First Page"  width="600" height="500"> 
 
 
 
