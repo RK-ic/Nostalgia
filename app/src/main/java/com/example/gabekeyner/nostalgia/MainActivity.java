@@ -1,5 +1,6 @@
 package com.example.gabekeyner.nostalgia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -119,6 +120,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        // Handles the Navigation Drawer Opening / Closing
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -144,10 +146,7 @@ public class MainActivity extends AppCompatActivity
                 mLinearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
                 break;
-            case R.id.gridView:
-                GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, 2);
-                recyclerView.setLayoutManager(mGridLayoutManager);
-                break;
+
             case R.id.staggeredViewVertical:
                 StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(mStaggeredVerticalLayoutManager);
@@ -161,6 +160,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -170,16 +170,16 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+            // Handle the pulling from gallery action
+            Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_create_group) {
+            // Handle the New Grouup action  action
+        } else if (id == R.id.nav_first_label) {
+            // Handle the added Group Label action
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+            // Handle the share action
+      }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
