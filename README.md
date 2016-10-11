@@ -1,5 +1,5 @@
 # Nostalgia
-<img src ="https://github.com/Keyner32/Nostalgia/blob/master/ic_launcher-web.png?raw=true" alt="Pin Icon" width="200" height="200">
+<img src ="https://github.com/Keyner32/Nostalgia/blob/master/Nostalgia_icon_final.png?raw=true" alt="Pin Icon" width="200" height="200">
 
 
 ## Motivation
