@@ -9,7 +9,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
     //VIEWS
     private void initViews(){
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         ArrayList<ImageHelper> imageHelpers = prepareData();
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
     }
     private ArrayList<ImageHelper> prepareData() {
         ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
