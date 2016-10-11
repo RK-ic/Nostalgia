@@ -49,6 +49,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             public void onClick(View v) {
                 Toast.makeText(context, "on click position" + position, Toast.LENGTH_SHORT).show();
             }
+
         });
 
         holder.mImageView.setOnLongClickListener(new View.OnLongClickListener() {

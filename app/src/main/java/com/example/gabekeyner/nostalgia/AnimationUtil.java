@@ -13,7 +13,7 @@ public class AnimationUtil {
         animatorTranslateY.setDuration(1000);
 
         ObjectAnimator animatorTranslateX = ObjectAnimator.ofFloat(holder.itemView, "translationX", -50, 50, -30, 30, -20, 20, -5, 5, 0);
-        animatorTranslateX.setDuration(1000);
+        animatorTranslateX.setDuration(800);
 
         animatorSet.playTogether(animatorTranslateX, animatorTranslateY);
 
