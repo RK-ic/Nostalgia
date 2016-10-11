@@ -9,18 +9,14 @@
 
     <item
         android:id="@+id/linearViewVertical"
+        android:icon="@mipmap/ic_listview"
         android:title="Linear View Vertical"
         android:orderInCategory="100"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/gridView"
-        android:title="Grid View"
-        android:orderInCategory="100"
-        app:showAsAction="never"/>
-
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/staggeredViewVertical"
         android:title="Staggered View Vertical"
+        android:icon="@mipmap/ic_staggered_view"
         android:orderInCategory="100"
-        app:showAsAction="never"/>
+        app:showAsAction="ifRoom"/>
 </menu>

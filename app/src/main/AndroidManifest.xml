@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gabekeyner.nostalgia">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+          package="com.example.gabekeyner.nostalgia">
+
+    <uses-permission
+        android:name="android.permission.INTERNET"/>
+    <!-- permissions and features for the [ Camera ] capabilities -->
+    <uses-permission android:name="android.permission.CAMERA"
+                     android:required="true"/>
+
+    <uses-feature android:name="android.hardware.camera.any"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <!-- This code below is if you want to show a location of where this photo was taken at -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
+    <uses-feature android:name="android.hardware.location.gps"/>
+
 
     <application
         android:allowBackup="true"
@@ -20,11 +36,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".CameraActivity">
+        </activity>
+
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
             android:theme="@style/FullscreenTheme"></activity>
+
     </application>
 
 </manifest>
