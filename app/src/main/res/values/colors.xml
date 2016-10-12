@@ -9,9 +9,11 @@
     <color name="LightColor">#6f3e7d</color>
     <!--Main Colors Are Below-->
     <color name="ColorDark2">#bea42e</color>
-    <color name="LightColor2">#00897b</color>
+    <color name="LightColor2">#00695c</color>
     <color name="colorAccent">#839162</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="Accent">#bea42e</color>
+    <color name="DarkColor2">#005d53</color>
 
 </resources>

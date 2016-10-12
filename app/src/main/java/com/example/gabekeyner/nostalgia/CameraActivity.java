@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +18,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 public class CameraActivity extends AppCompatActivity {
@@ -63,16 +60,10 @@ public class CameraActivity extends AppCompatActivity {
 
     }
 
-    //TODO TO OPEN THE PICTURE TAKING APPLICATION DOES NOT NEED TO BE ON ANOTHER THREAD
-    //TODO ONLY WHEN SAVING TO GALLERY OR SELECTING FROM GALLERY DOES IT NEED TO BE ON A OTHER THREAD
-
-
-
-    private File createImageFile() throws IOException {
+    public File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        String imageFileName = "JPEG_" + "_";
+        File storageDir =  getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -81,11 +72,15 @@ public class CameraActivity extends AppCompatActivity {
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+
+
         return image;
     }
 
-    //  this method available to create a file for the photo, you can now create and invoke the Intent like this
-    private void dispatchTakePictureIntent() {
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    public void dispatchTakePictureIntent() {
+
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -94,37 +89,52 @@ public class CameraActivity extends AppCompatActivity {
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                Toast.makeText(this, "Error occurred while creating the File", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CameraActivity.this, "No SD card on this device", Toast.LENGTH_SHORT).show();
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
+
             }
         }
     }
+    private void setPic() {
+        ImageView mImageView = (ImageView)findViewById(R.id.mImageView);
 
+        // Get the dimensions of the View
+        int targetW = mImageView.getWidth();
+        int targetH = mImageView.getHeight();
 
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
+        mImageView.setImageBitmap(bitmap);
+    }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == CameraActivity.RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            ImageProcessingAsyncTask imageTask = new ImageProcessingAsyncTask();
-            imageTask.execute(selectedImage);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            setPic();
+
         }
-//        if (requestCode == REQUEST_TAKE_PHOTO && requestCode == CameraActivity.RESULT_OK && null != data) {
-//            Uri takeImage = data.getData();
-//            ImageProcessingAsyncTask takeImageTask = new ImageProcessingAsyncTask();
-//            takeImageTask.execute(takeImage);
-//        }
-
-
     }
+
     //Adds the photo to a Gallery
 
     private void galleryAddPic() {
