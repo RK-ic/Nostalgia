@@ -21,10 +21,6 @@ import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
 
-//import static com.example.gabekeyner.nostalgia.R.anim.fab_hide;
-//import static com.example.gabekeyner.nostalgia.R.anim.fab_show;
-//import static com.example.gabekeyner.nostalgia.R.id.floatingActionButton;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,22 +73,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-//        fabAnimations();
-//        fabClickable();
+        fabAnimations();
+        fabClickable();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -102,8 +89,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+}
 
-//    private void  fabAnimations(){
+    private void fabAnimations() {
         //ANIMATION LAYOUTS
         hide_fab = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_hide);
         show_fab = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_show);
@@ -116,14 +104,14 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.floatingActionButton3);
 
-//    }
-//    private void fabClickable () {
+    }
+
+    private void fabClickable() {
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isOpen)
-                {
+                if (isOpen) {
                     fab.startAnimation(rotate_anticlockwise);
 
                     floatingActionButton1.startAnimation(hide_fab);
@@ -137,9 +125,7 @@ public class MainActivity extends AppCompatActivity
 
                     isOpen = false;
 
-                }
-                else
-                {
+                } else {
                     fab.startAnimation(rotate_clockwise);
 
                     floatingActionButton1.startAnimation(show_fab);
@@ -152,11 +138,6 @@ public class MainActivity extends AppCompatActivity
 
                     isOpen = true;
                 }
-            }
-        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
             }
         });
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
@@ -176,11 +157,7 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-//    }
-
     }
-
-
 
     //VIEWS
     private void initViews(){
@@ -245,8 +222,6 @@ public class MainActivity extends AppCompatActivity
         }
             return super.onOptionsItemSelected(item);
         }
-
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
