@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private ArrayList<ImageHelper> images;
@@ -47,6 +49,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         previousPosition = position;
 
         setScaleAnimation(holder.mImageView);
+        setFadeAnimation(holder.mTextView);
+        setAnimation(holder.mImageView, lastPosition);
 
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +86,31 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     //ANIMATIONS
-    private final static int FADE_DURATION = 700;
+    private final static int SCALE_DURATION = 500;
+    private final static int FADE_DURATION = 2000;
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
+    }
 
     private void setScaleAnimation(View view) {
         ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        anim.setDuration(FADE_DURATION);
+        anim.setDuration(SCALE_DURATION);
         view.startAnimation(anim);
+    }
+
+    private int lastPosition = -1;
+
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            anim.setDuration(new Random().nextInt(501));//to make duration random number between [0,501)
+            viewToAnimate.startAnimation(anim);
+            lastPosition = position;
+        }
     }
 
 
