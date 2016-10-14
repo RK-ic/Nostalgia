@@ -39,4 +39,6 @@
 
     </style>
 
+    <style name="transparent" parent="android:Theme.Holo.Light.NoActionBar.TranslucentDecor" />
+
 </resources>
