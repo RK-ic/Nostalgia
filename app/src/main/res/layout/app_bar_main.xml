@@ -11,7 +11,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="56dp"
+        android:layout_height="50dp"
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         tools:layout_constraintTop_creator="1"
@@ -19,7 +19,9 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="24dp"
+        app:logo="@mipmap/ic_launcher" />
 
 
     <include
@@ -45,12 +47,14 @@
         android:elevation="6dp"
         app:fabSize="normal"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@android:drawable/ic_dialog_email"
+        app:srcCompat="@drawable/expand"
         app:layout_constraintBottom_toBottomOf="@+id/include"
         app:layout_constraintLeft_toLeftOf="@+id/include"
         app:layout_constraintRight_toRightOf="@+id/include"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        app:backgroundTint="@color/cardview_shadow_start_color"
+        android:tint="@color/Accent" />
 
     <!--<include layout="@layout/fab_layout"/>-->
 
@@ -59,14 +63,17 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="normal"
-        app:srcCompat="@mipmap/ic_launcher"
+        app:srcCompat="@drawable/camera"
         android:id="@+id/floatingActionButton1"
         app:layout_constraintBottom_toTopOf="@+id/fab"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="36dp"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        app:backgroundTint="@android:color/transparent"
+        android:background="@color/cardview_shadow_start_color"
+        android:tint="@color/Accent" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
@@ -80,20 +87,25 @@
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton1"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton1" />
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton1"
+        app:backgroundTint="@color/cardview_shadow_start_color"
+        android:hapticFeedbackEnabled="true"
+        android:tint="@color/Accent" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/ic_menu_manage"
+        app:srcCompat="@drawable/vr"
         android:id="@+id/floatingActionButton3"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toRightOf="@+id/floatingActionButton1"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton1"
-        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton1" />
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton1"
+        app:backgroundTint="@android:color/transparent"
+        android:background="@color/cardview_shadow_start_color"
+        android:tint="@color/Accent" />
 
 </android.support.constraint.ConstraintLayout>

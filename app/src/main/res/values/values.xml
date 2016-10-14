@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_material_light">#bc73ba</color>
+    <color name="background_material_light">#b250af</color>
     <color name="foreground_material_light">#000000</color>
 </resources>
