@@ -22,9 +22,16 @@
 
     <TextView
         android:id="@+id/textView"
+        android:fontFamily="cursive"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/imageView"/>
+        android:layout_alignBottom="@id/imageView"
+        android:elevation="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     </RelativeLayout>
 
