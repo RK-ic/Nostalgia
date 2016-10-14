@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillAfter="true">
+    <scale
+        android:duration="300"
+        android:fromXScale="0.0"
+        android:fromYScale="0.0"
+        android:toXScale="1.0"
+        android:toYScale="1.0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:interpolator="@android:anim/linear_interpolator"
+        />
+
+    <alpha
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:duration="300"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        />
+    <translate
+        android:duration="700"
+        android:fromXDelta="100%"
+        android:fromYDelta="100%"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:toXDelta="0%"
+        android:toYDelta="0%">
+
+    </translate>
+
+    <rotate
+        android:duration="500"
+        android:fromDegrees="30"
+        android:interpolator="@android:anim/linear_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:repeatCount="8"
+        android:repeatMode="reverse"
+        android:toDegrees="0">
+
+    </rotate>
+</set>
+<!--<set-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:fillAfter="true">-->
+    <!--&lt;!&ndash; Rotate &ndash;&gt;-->
+    <!--<rotate-->
+        <!--android:duration="500"-->
+        <!--android:fromDegrees="30"-->
+        <!--android:interpolator="@android:anim/linear_interpolator"-->
+        <!--android:pivotX="50%"-->
+        <!--android:pivotY="50%"-->
+        <!--android:repeatCount="4"-->
+        <!--android:repeatMode="reverse"-->
+        <!--android:toDegrees="0">-->
+
+    <!--</rotate>-->
+
+    <!--&lt;!&ndash;Move&ndash;&gt;-->
+    <!--<translate-->
+        <!--android:duration="1000"-->
+        <!--android:fromXDelta="170%"-->
+        <!--android:fromYDelta="25%"-->
+        <!--android:interpolator="@android:anim/linear_interpolator"-->
+        <!--android:toXDelta="0%"-->
+        <!--android:toYDelta="0%">-->
+
+    <!--</translate>-->
+
+    <!--&lt;!&ndash;Fade In&ndash;&gt;-->
+    <!--<alpha-->
+        <!--android:duration="2000"-->
+        <!--android:fromAlpha="0.0"-->
+        <!--android:interpolator="@android:anim/decelerate_interpolator"-->
+        <!--android:toAlpha="1.0">-->
+
+    <!--</alpha>-->
+<!--</set>-->
