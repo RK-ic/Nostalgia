@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity
                 if (isOpen) {
                     fab.startAnimation(rotate_anticlockwise);
 
+
                     floatingActionButton1.startAnimation(hide_fab);
                     floatingActionButton2.startAnimation(hide_fab);
                     floatingActionButton3.startAnimation(hide_fab);
