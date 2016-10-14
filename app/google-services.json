@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "889770797099",
+    "firebase_url": "https://nostalgia-2dd3f.firebaseio.com",
+    "project_id": "nostalgia-2dd3f",
+    "storage_bucket": "nostalgia-2dd3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889770797099:android:b46d1020df3e6f54",
+        "android_client_info": {
+          "package_name": "com.example.gabekeyner.nostalgia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889770797099-012boc6pmb9t4imdgh1bp0elhljjdpi9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN_poVH3h_8lUNMDwtv28uLaFWSeS_T2U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
