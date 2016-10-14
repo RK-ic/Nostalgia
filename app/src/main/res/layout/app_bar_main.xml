@@ -64,7 +64,6 @@
         android:layout_height="70dp"
         android:clickable="true"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_menu_camera"
         android:id="@+id/floatingActionButton1"
         app:layout_constraintBottom_toTopOf="@+id/fab"
         app:layout_constraintRight_toRightOf="parent"
@@ -74,8 +73,8 @@
         tools:layout_constraintLeft_creator="1"
         android:tint="@color/colorAccent"
         android:adjustViewBounds="true"
-        app:elevation="18dp"
-        app:backgroundTint="@color/colorPrimary" />
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_menu_camera" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="70dp"
