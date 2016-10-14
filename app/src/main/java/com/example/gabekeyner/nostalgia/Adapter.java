@@ -38,7 +38,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final Adapter.ViewHolder holder, final int position) {
         holder.mTextView.setText(images.get(position).getImageHelper_name());
-        Picasso.with(context).load(images.get(position).getImageHelper_url()).into(holder.mImageView);
+
+        Picasso.with(context)
+                .load(images.get(position)
+                        .getImageHelper_url())
+                .resize(800, 500)
+                .centerCrop()
+                .into(holder.mImageView);
+
         //FOR ANIMATION
         if(position > previousPosition){
             //We are scrolling down
@@ -86,7 +93,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     //ANIMATIONS
-    private final static int SCALE_DURATION = 500;
+    private final static int SCALE_DURATION = 300;
     private final static int FADE_DURATION = 2000;
 
     private void setFadeAnimation(View view) {

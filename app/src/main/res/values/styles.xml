@@ -1,13 +1,17 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--TODO ASK CHRIS IF HE THINKS MORE MATERIAL DESIGN COLORS-->
 
         <item name="colorPrimary">@color/LightColor2</item>
         <item name="colorPrimaryDark">@color/DarkColor2</item>
         <item name="colorAccent">@color/Accent</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:colorBackground">@color/background_material_light</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:colorForeground">@color/foreground_material_light</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -34,5 +38,7 @@
         <item name="android:background">@color/black_overlay</item>
 
     </style>
+
+    <style name="transparent" parent="android:Theme.Holo.Light.NoActionBar.TranslucentDecor" />
 
 </resources>
