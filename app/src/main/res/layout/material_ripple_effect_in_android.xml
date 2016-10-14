@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="10dp"
+              android:orientation="vertical">
+
+
+    <com.andexert.library.RippleView
+        android:id="@+id/material_ripple_effect_animation"
+        rv_centered="true"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:background="#b12f9b"
+            android:elevation="4dp" />
+    </com.andexert.library.RippleView>
+
+    <com.andexert.library.RippleView
+        android:id="@+id/android_material_ripple_effect_animation"
+        rv_centered="true"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:background="@android:color/holo_blue_dark"
+            android:elevation="4dp" />
+    </com.andexert.library.RippleView>
+
+    <com.andexert.library.RippleView
+        android:id="@+id/material_design_ripple"
+        rv_centered="true"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:background="#b12f3c"
+            android:elevation="4dp" />
+
+    </com.andexert.library.RippleView>
+
+    <com.andexert.library.RippleView
+        android:id="@+id/material_ripple_animation"
+        rv_centered="true"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp">
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:background="#2fb145"
+            android:elevation="4dp" />
+    </com.andexert.library.RippleView>
+</LinearLayout>

@@ -35,6 +35,8 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        //casting the ImageView
         mImageView = (ImageView) findViewById(R.id.mImageView);
 
         mImageView.setImageResource(R.drawable.placeholder);
