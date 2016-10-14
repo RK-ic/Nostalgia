@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     public RecyclerView recyclerView;
     FloatingActionButton fab, floatingActionButton1, floatingActionButton2, floatingActionButton3;
-    Animation hide_fab, show_fab, rotate_anticlockwise, rotate_clockwise;
+    Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise;
     boolean isOpen = true;
 
     private final String image_names[] = {
@@ -76,6 +76,13 @@ public class MainActivity extends AppCompatActivity
         fabAnimations();
         fabClickable();
 
+        fab.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                clickFab();
+            }
+        }, 2000);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -89,12 +96,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 }
 
     private void fabAnimations() {
         //ANIMATION LAYOUTS
         hide_fab = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_hide);
         show_fab = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_show);
+        show_fab2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_show2);
+        show_fab3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_show3);
         rotate_anticlockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_anticlockwise);
         rotate_clockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_clockwise);
 
@@ -128,9 +139,9 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     fab.startAnimation(rotate_clockwise);
 
-                    floatingActionButton1.startAnimation(show_fab);
+                    floatingActionButton1.startAnimation(show_fab2);
                     floatingActionButton2.startAnimation(show_fab);
-                    floatingActionButton3.startAnimation(show_fab);
+                    floatingActionButton3.startAnimation(show_fab3);
 
                     floatingActionButton1.setClickable(true);
                     floatingActionButton2.setClickable(true);
@@ -159,6 +170,10 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    private void clickFab(){
+        fab.callOnClick();
+    }
+
     //VIEWS
     private void initViews(){
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
@@ -168,7 +183,6 @@ public class MainActivity extends AppCompatActivity
         ArrayList<ImageHelper> imageHelpers = prepareData();
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
-
     }
     private ArrayList<ImageHelper> prepareData() {
         ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
