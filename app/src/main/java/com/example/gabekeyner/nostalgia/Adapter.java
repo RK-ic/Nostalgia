@@ -86,7 +86,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     }
 
     //ANIMATIONS
-    private final static int SCALE_DURATION = 500;
+    private final static int SCALE_DURATION = 300;
     private final static int FADE_DURATION = 2000;
 
     private void setFadeAnimation(View view) {
