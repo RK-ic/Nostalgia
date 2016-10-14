@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -72,6 +74,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
+
         initViews();
         fabAnimations();
         fabClickable();
@@ -155,12 +160,15 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+                startActivity(intent);
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this, SelectImageActivity.class);
+                startActivity(intent);
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
@@ -248,8 +256,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             // Handle the pulling from gallery action
-            Intent intent = new Intent(MainActivity.this,CameraActivity.class);
-            startActivity(intent);
+
         } else if (id == R.id.nav_create_group) {
             // Handle the New Grouup action  action
         } else if (id == R.id.nav_first_label) {
@@ -262,5 +269,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 }
