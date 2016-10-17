@@ -125,11 +125,12 @@
         android:tint="@color/colorAccent"
         android:adjustViewBounds="true"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@drawable/ic_image_black_24dp"
+        android:focusable="false" />
 
     <android.support.design.widget.FloatingActionButton
         android:clickable="true"
-        app:srcCompat="@android:drawable/ic_menu_slideshow"
+        app:srcCompat="@drawable/ic_movie_black_24dp"
         android:id="@+id/fabVideo"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toRightOf="@+id/floatingActionButton1"

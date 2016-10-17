@@ -250,8 +250,6 @@ public class MainActivity extends AppCompatActivity
                     isOpen = false;
 
                 }else {
-//                    floatingActionButton2.startAnimation(rotate_clockwise);
-
                     fabPhoto.startAnimation(hide_fab);
                     fabVideo.startAnimation(hide_fab);
 
