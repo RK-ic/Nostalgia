@@ -41,24 +41,19 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
-<<<<<<< HEAD
+
     public static final String TAG = "Nostalgia";
     private DatabaseReference mDatabase;
-    FloatingActionButton fab, floatingActionButton1, floatingActionButton2, floatingActionButton3;
-    Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise;
-    boolean isOpen = true;
 
     // Firebase instance variables
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference postRef = mRootRef.child("post");
-//    FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
-//            mFirebaseAdapter;
-=======
+
+
     FloatingActionButton fab, fabPhoto, fabVideo, floatingActionButton1, floatingActionButton2, floatingActionButton3;
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
 
-    public static final String TAG = MainActivity.class.getSimpleName();
 
     public static final int REQUEST_TAKE_PHOTO = 0;
     public static final int REQUEST_TAKE_VIDEO = 1;
@@ -69,7 +64,7 @@ public class MainActivity extends AppCompatActivity
     public static final int MEDIA_TYPE_VIDEO = 5;
 
     private Uri mMediaUri;
->>>>>>> RK-ic/master
+
 
     private final String image_names[] = {
             "Image",
@@ -202,7 +197,6 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-<<<<<<< HEAD
         //Handles the Read and Write to Database
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -226,7 +220,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-=======
+
 }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -256,7 +250,7 @@ public class MainActivity extends AppCompatActivity
         else if (resultCode != RESULT_CANCELED) {
             Toast.makeText(this, "Sorry, there was an error!", Toast.LENGTH_LONG).show();
         }
->>>>>>> RK-ic/master
+
     }
 
     private void fabAnimations() {
@@ -365,10 +359,10 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
+
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(intent);
-=======
+
                 mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                 if (mMediaUri == null) {
                     Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.",
@@ -377,7 +371,7 @@ public class MainActivity extends AppCompatActivity
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
                 startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
->>>>>>> RK-ic/master
+
             }
         });
         fabPhoto.setOnClickListener(new View.OnClickListener() {
@@ -412,85 +406,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-<<<<<<< HEAD
-//        postRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//               Bitmap image = dataSnapshot.getValue(Bitmap.class);
-//                recyclerView.setAdapter(image);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-////TODO ---------------------------------------
-//
-//
-//    // New child entries
-//    mFirebaseDatabaseReference=FirebaseDatabase.getInstance().
-//
-//    getReference();
-//
-//    mFirebaseAdapter=new FirebaseRecyclerAdapter<FriendlyMessage,
-//            MessageViewHolder>(
-//    FriendlyMessage.class,
-//    R.layout.item_message,
-//    MessageViewHolder.class,
-//            mFirebaseDatabaseReference.child(MESSAGES_CHILD))
-//
-//    {
-//
-//        @Override
-//        protected void populateViewHolder (MessageViewHolder viewHolder,
-//            FriendlyMessage friendlyMessage,int position){
-//        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-//        viewHolder.messageTextView.setText(friendlyMessage.getText());
-//        viewHolder.messengerTextView.setText(friendlyMessage.getName());
-//        if (friendlyMessage.getPhotoUrl() == null) {
-//            viewHolder.messengerImageView
-//                    .setImageDrawable(ContextCompat
-//                            .getDrawable(MainActivity.this,
-//                                    R.drawable.ic_account_circle_black_36dp));
-//        } else {
-//            Glide.with(MainActivity.this)
-//                    .load(friendlyMessage.getPhotoUrl())
-//                    .into(viewHolder.messengerImageView);
-//        }
-//    }
-//    }
-//
-//    ;
-//
-//    mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver()
-//
-//    {
-//        @Override
-//        public void onItemRangeInserted ( int positionStart, int itemCount){
-//        super.onItemRangeInserted(positionStart, itemCount);
-//        int friendlyMessageCount = mFirebaseAdapter.getItemCount();
-//        int lastVisiblePosition =
-//                mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
-//        // If the recycler view is initially being loaded or the
-//        // user is at the bottom of the list, scroll to the bottom
-//        // of the list to show the newly added message.
-//        if (lastVisiblePosition == -1 ||
-//                (positionStart >= (friendlyMessageCount - 1) &&
-//                        lastVisiblePosition == (positionStart - 1))) {
-//            mMessageRecyclerView.scrollToPosition(positionStart);
-//        }
-//    }
-//    }
-//
-//    );
-//
-//    mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
-//    mMessageRecyclerView.setAdapter(mFirebaseAdapter);
 
-    private void clickFab() {
-=======
 
     private Uri getOutputMediaFileUri(int mediaType) {
         //check for external storage
@@ -535,7 +451,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void clickFab(){
->>>>>>> RK-ic/master
         fab.callOnClick();
     }
 

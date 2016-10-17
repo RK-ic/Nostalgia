@@ -46,23 +46,10 @@
         </activity>
         <activity
             android:name=".CameraActivity"
-<<<<<<< HEAD
             android:exported="true">
 
         </activity>
-        <activity
-            android:name=".FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme">
 
-        </activity>
-        <activity android:name=".SelectImageActivity">
-
-        </activity>
-=======
-            android:exported="true"></activity>
->>>>>>> RK-ic/master
 
         <service android:name=".DatabaseActivitys.CloudMessagingService">
             <intent-filter>
@@ -84,7 +71,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
 
         <provider
             android:name=".NostalgiaContentProvider"
@@ -94,12 +80,13 @@
             android:syncable="true"/>
         <meta-data android:name="com.facebook.sdk.ApplicationId"
                    android:value="@string/facebook_app_id"/>
-=======
+
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme"></activity>
->>>>>>> RK-ic/master
+            android:theme="@style/AppTheme">
+        </activity>
+
     </application>
 
 </manifest>
