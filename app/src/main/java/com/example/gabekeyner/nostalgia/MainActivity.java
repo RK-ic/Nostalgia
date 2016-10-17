@@ -1,7 +1,10 @@
 package com.example.gabekeyner.nostalgia;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,15 +16,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +39,18 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton fab, floatingActionButton1, floatingActionButton2, floatingActionButton3;
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise;
     boolean isOpen = true;
+
+    public static final String TAG = MainActivity.class.getSimpleName();
+
+    public static final int REQUEST_TAKE_PHOTO = 0;
+    public static final int REQUEST_TAKE_VIDEO = 1;
+    public static final int REQUEST_PICK_PHOTO = 2;
+    public static final int REQUEST_PICK_VIDEO = 3;
+
+    public static final int MEDIA_TYPE_IMAGE = 4;
+    public static final int MEDIA_TYPE_VIDEO = 5;
+
+    private Uri mMediaUri;
 
     private final String image_names[] = {
             "Image",
@@ -160,6 +181,21 @@ public class MainActivity extends AppCompatActivity
 
 
 }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_TAKE_PHOTO) {
+                Intent intent = new Intent(this, CameraActivity.class);
+                intent.setData(mMediaUri);
+                startActivity(intent);
+            }
+        }
+        else if (resultCode != RESULT_CANCELED) {
+            Toast.makeText(this, "Sorry, there was an error!", Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void fabAnimations() {
         //ANIMATION LAYOUTS
@@ -216,8 +252,14 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
-                startActivity(intent);
+                mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                if (mMediaUri == null) {
+                    Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
             }
         });
         floatingActionButton2.setOnClickListener(new View.OnClickListener() {
@@ -233,6 +275,48 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    private Uri getOutputMediaFileUri(int mediaType) {
+        //check for external storage
+        if (isExternalStorageAvailable()) {
+            // get the URI
+            File mediaStorageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            String fileName = "";
+            String fileType = "";
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+            if (mediaType == MEDIA_TYPE_IMAGE) {
+                fileName = "IMG_" + timeStamp;
+                fileType = ".jpg";
+            } else if (mediaType == MEDIA_TYPE_VIDEO) {
+                fileName = "VID_" + timeStamp;
+                fileType = ".mp4";
+            } else {
+                return null;
+            }
+            File mediaFile;
+            try {
+                mediaFile = File.createTempFile(fileName, fileType, mediaStorageDir);
+                Log.i(TAG, "File: " + Uri.fromFile(mediaFile));
+
+                return Uri.fromFile(mediaFile);
+            } catch (IOException e) {
+                Log.e(TAG, "Error creating file: " + mediaStorageDir.getAbsolutePath() + fileName + fileType);
+            }
+        }
+            // something went wrong
+        return null;
+    }
+
+    private boolean isExternalStorageAvailable(){
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private void clickFab(){
