@@ -5,8 +5,8 @@
     android:id="@+id/activity_camera"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    tools:context="com.example.gabekeyner.nostalgia.CameraActivity">
+    tools:context="com.example.gabekeyner.nostalgia.CameraActivity"
+    android:background="#000000">
 
 
     <ImageView

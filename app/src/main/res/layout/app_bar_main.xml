@@ -74,7 +74,7 @@
         android:tint="@color/colorAccent"
         android:adjustViewBounds="true"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_menu_camera" />
+        app:srcCompat="@drawable/ic_camera_black_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="70dp"
@@ -96,7 +96,7 @@
 
     <android.support.design.widget.FloatingActionButton
         android:clickable="true"
-        app:srcCompat="@drawable/vr"
+        app:srcCompat="@drawable/ic_videocam_black_24dp"
         android:id="@+id/floatingActionButton3"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toRightOf="@+id/floatingActionButton1"
