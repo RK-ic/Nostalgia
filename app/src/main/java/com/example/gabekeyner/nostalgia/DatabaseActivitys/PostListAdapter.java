@@ -1,4 +1,4 @@
-package com.example.gabekeyner.nostalgia;
+package com.example.gabekeyner.nostalgia.DatabaseActivitys;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -12,41 +12,52 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gabekeyner.nostalgia.AnimationUtil;
+import com.example.gabekeyner.nostalgia.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+/**
+ * Created by GabeKeyner on 10/17/2016.
+ */
+
+public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostListViewHolder> {
 
 
-    private ArrayList<ImageHelper> images;
-    private Context context;
-
+    Post[] postArray;
+    Context context;
     int previousPosition = 0;
 
-
-
-    public Adapter(Context context, ArrayList<ImageHelper> images) {
-        this.images = images;
+    //TODO NEW ADAPTER
+    public PostListAdapter(Post[]postArray, Context context) {
         this.context = context;
+        this.postArray = postArray;
     }
-
-
     @Override
-    public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PostListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
-        return new ViewHolder(itemView);
+        PostListViewHolder holder = new PostListViewHolder(itemView);
+        return holder;
+
+
 
     }
 
+
     @Override
-    public void onBindViewHolder(final Adapter.ViewHolder holder, final int position) {
-        holder.mTextView.setText(images.get(position).getImageHelper_name());
+    public void onBindViewHolder(final PostListAdapter.PostListViewHolder holder, final int position) {
+        TextView title = holder.title;
+
+
+
+
+        title.setText(postArray[position].getTitle());
+
 
         Picasso.with(context)
-                .load(images.get(position)
-                        .getImageHelper_url())
+                .load(postArray[position].getImageURL())
                 .resize(800, 500)
                 .centerCrop()
                 .into(holder.mImageView);
@@ -61,7 +72,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         previousPosition = position;
 
         setScaleAnimation(holder.mImageView);
-        setFadeAnimation(holder.mTextView);
+        setFadeAnimation(holder.title);
         setAnimation(holder.mImageView, lastPosition);
 
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
@@ -81,21 +92,25 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         });
     }
 
-
     @Override
     public int getItemCount() {
-        return images.size();
+        return postArray.length;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+
+    public static class PostListViewHolder extends RecyclerView.ViewHolder{
+
+        public TextView title;
         public ImageView mImageView;
-        public ViewHolder(View itemView) {
+
+        public PostListViewHolder(View itemView) {
             super(itemView);
-            mTextView = (TextView) itemView.findViewById(R.id.textView);
+            title = (TextView) itemView.findViewById(R.id.textView);
             mImageView = (ImageView) itemView.findViewById(R.id.imageView);
         }
     }
+
+
 
     //ANIMATIONS
     private final static int SCALE_DURATION = 180;
@@ -124,6 +139,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             lastPosition = position;
         }
     }
-
 
 }

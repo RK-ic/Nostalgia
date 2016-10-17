@@ -16,4 +16,20 @@
 
 
 
+    <com.facebook.share.widget.ShareButton
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share"/>
+
+
+    <!--<ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:visibility="invisible"/>-->
+
+
 </RelativeLayout>

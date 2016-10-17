@@ -24,6 +24,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.File;
@@ -36,11 +41,19 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
+
+    public static final String TAG = "Nostalgia";
+    private DatabaseReference mDatabase;
+
+    // Firebase instance variables
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference postRef = mRootRef.child("post");
+
+
     FloatingActionButton fab, fabPhoto, fabVideo, floatingActionButton1, floatingActionButton2, floatingActionButton3;
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
 
-    public static final String TAG = MainActivity.class.getSimpleName();
 
     public static final int REQUEST_TAKE_PHOTO = 0;
     public static final int REQUEST_TAKE_VIDEO = 1;
@@ -51,6 +64,7 @@ public class MainActivity extends AppCompatActivity
     public static final int MEDIA_TYPE_VIDEO = 5;
 
     private Uri mMediaUri;
+
 
     private final String image_names[] = {
             "Image",
@@ -100,7 +114,7 @@ public class MainActivity extends AppCompatActivity
     };
 
     private final String image_urls[] = {
-           "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
+            "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
             "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
             "https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg",
             "http://kingofwallpapers.com/city-pictures/city-pictures-021.jpg",
@@ -154,6 +168,7 @@ public class MainActivity extends AppCompatActivity
 
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
+
         initViews();
         fabAnimations();
         fabClickable();
@@ -180,6 +195,30 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //Handles the Read and Write to Database
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
 
 }
@@ -211,6 +250,7 @@ public class MainActivity extends AppCompatActivity
         else if (resultCode != RESULT_CANCELED) {
             Toast.makeText(this, "Sorry, there was an error!", Toast.LENGTH_LONG).show();
         }
+
     }
 
     private void fabAnimations() {
@@ -319,6 +359,10 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                startActivity(intent);
+
                 mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                 if (mMediaUri == null) {
                     Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.",
@@ -327,6 +371,7 @@ public class MainActivity extends AppCompatActivity
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
                 startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
+
             }
         });
         fabPhoto.setOnClickListener(new View.OnClickListener() {
@@ -361,6 +406,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
 
     private Uri getOutputMediaFileUri(int mediaType) {
         //check for external storage
@@ -409,8 +455,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     //VIEWS
-    private void initViews(){
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+    private void initViews() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
@@ -418,6 +464,7 @@ public class MainActivity extends AppCompatActivity
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
     }
+
     private ArrayList<ImageHelper> prepareData() {
         ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
         for (int i = 0; i < image_names.length; i++) {
@@ -468,8 +515,8 @@ public class MainActivity extends AppCompatActivity
 //                return true;
 //            }
         }
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -488,7 +535,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the added Group Label action
         } else if (id == R.id.nav_share) {
             // Handle the share action
-      }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

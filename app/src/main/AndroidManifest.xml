@@ -21,6 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
         <!-- android:authorities="com.example.gabekeyner.nostalgia.fileprovider" -->
@@ -68,10 +70,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".NostalgiaContentProvider"
+            android:authorities="com.example.gabekeyner.nostalgia.NostalgiaContentProvider"
+            android:exported="true"
+            android:label="my provider"
+            android:syncable="true"/>
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+                   android:value="@string/facebook_app_id"/>
+
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme">
+        </activity>
+
     </application>
 
 </manifest>
