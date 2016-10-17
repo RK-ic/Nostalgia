@@ -27,7 +27,6 @@ public class CameraActivity extends AppCompatActivity {
     //Add progress bar   private ProgressBar mProgressBar;
     static final int REQUEST_TAKE_PHOTO = 1;
     static final int PICK_IMAGE_REQUEST = 1;
-    private static final String TAG = CameraActivity.class.getName();
     private ImageView mImageView;
     private Button selectBtn;
     private Button takeBtn;
@@ -39,9 +38,24 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_camera);
-
-
-
+//
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        if (auth.getCurrentUser() != null) {
+//            // already signed in
+//        } else {
+//            // not signed in
+//        }
+//
+//        //Builds the sign with Smart Lock feature to remember user credentials
+//        startActivityForResult(
+//                AuthUI.getInstance()
+//                        .createSignInIntentBuilder()
+//                        .setIsSmartLockEnabled(false)
+//                        .setProviders(
+//                                AuthUI.FACEBOOK_PROVIDER)
+////                        .setTheme(R.style.) will use for color customization
+//                        .build(),
+//                RC_SIGN_IN);
 
         //casting the ImageView
         mImageView = (ImageView) findViewById(R.id.mImageView);
@@ -49,9 +63,7 @@ public class CameraActivity extends AppCompatActivity {
         mImageView.setImageResource(R.drawable.ic_menu_camera);
 
 
-
-
-        takeBtn = (Button)findViewById(R.id.take_image);
+        takeBtn = (Button) findViewById(R.id.take_image);
         takeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,12 +73,12 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         //mProgressBar = (ProgressBar)findViewById(R.id.progress);
-                // mProgressBar.setMax(100);
+        // mProgressBar.setMax(100);
 
         // TODO [.setContentDescription(String.valueOf(currentPhoto))]
         // not sure if this is the correct code but essentially we want
         // to be able to send a current photo to facebook
-        ShareButton sharebutton = (ShareButton)findViewById(R.id.share);
+        ShareButton sharebutton = (ShareButton) findViewById(R.id.share);
 
         SharePhoto photo = new SharePhoto.Builder()
                 .setImageUrl(Uri.parse("https://github.com/RK-ic/Nostalgia"))
@@ -79,6 +91,14 @@ public class CameraActivity extends AppCompatActivity {
 
         sharebutton.setShareContent(content);
 
+//        Uri videoFileUri = ...
+//        ShareVideo = new ShareVideo.Builder()
+//                .setLocalUrl(videoUrl)
+//                .build();
+//        ShareVideoContent content = new ShareVideoContent.Builder()
+//                .setVideo(video)
+//                .build();
+
 
         //        ShareLinkContent linkContent = new ShareLinkContent.Builder()
 //                .setContentUrl(Uri.parse("https://github.com/RK-ic/Nostalgia"))
@@ -90,7 +110,19 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
+        //Handles the Firebase User Authorization
+//        if (requestCode == RC_SIGN_IN) {
+//            if (resultCode == RESULT_OK) {
+//                // user is signed in!
+//                startActivity(new Intent(this, CameraActivity.class));
+//                finish();
+//            } else {
+//                // user is not signed in. Maybe just wait for the user to press
+//                // "sign in" again, or show a message
+//            }
+//
+//        }
+        //Handles Picture Data
         Bundle extras = data.getExtras();
 
         Bitmap imageBitmap = (Bitmap) extras.get("data");
@@ -105,7 +137,7 @@ public class CameraActivity extends AppCompatActivity {
     public File createImageFile() throws IOException {
         // Create an image file name
         String imageFileName = "JPEG_" + "_";
-        File storageDir =  getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -143,8 +175,9 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
+
     private void setPic() {
-        ImageView mImageView = (ImageView)findViewById(R.id.mImageView);
+        ImageView mImageView = (ImageView) findViewById(R.id.mImageView);
 
         // Get the dimensions of the View
         int targetW = mImageView.getWidth();
@@ -158,7 +191,7 @@ public class CameraActivity extends AppCompatActivity {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+        int scaleFactor = Math.min(photoW / targetW, photoH / targetH);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
@@ -170,7 +203,6 @@ public class CameraActivity extends AppCompatActivity {
     }
 
 
-
     //Adds the photo to a Gallery
 
     private void galleryAddPic() {
@@ -180,9 +212,6 @@ public class CameraActivity extends AppCompatActivity {
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
     }
-
-
-
 
 
 //    //TODO: Fill in the parameter types

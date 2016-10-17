@@ -13,12 +13,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
@@ -27,9 +33,17 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
+    public static final String TAG = "Nostalgia";
+    private DatabaseReference mDatabase;
     FloatingActionButton fab, floatingActionButton1, floatingActionButton2, floatingActionButton3;
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise;
     boolean isOpen = true;
+
+    // Firebase instance variables
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference postRef = mRootRef.child("post");
+//    FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
+//            mFirebaseAdapter;
 
     private final String image_names[] = {
             "Image",
@@ -79,7 +93,7 @@ public class MainActivity extends AppCompatActivity
     };
 
     private final String image_urls[] = {
-           "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
+            "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
             "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
             "https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg",
             "http://kingofwallpapers.com/city-pictures/city-pictures-021.jpg",
@@ -133,6 +147,7 @@ public class MainActivity extends AppCompatActivity
 
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
+
         initViews();
         fabAnimations();
         fabClickable();
@@ -159,7 +174,30 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-}
+        //Handles the Read and Write to Database
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+    }
 
     private void fabAnimations() {
         //ANIMATION LAYOUTS
@@ -216,7 +254,7 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(intent);
             }
         });
@@ -234,14 +272,89 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+//        postRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//               Bitmap image = dataSnapshot.getValue(Bitmap.class);
+//                recyclerView.setAdapter(image);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+////TODO ---------------------------------------
+//
+//
+//    // New child entries
+//    mFirebaseDatabaseReference=FirebaseDatabase.getInstance().
+//
+//    getReference();
+//
+//    mFirebaseAdapter=new FirebaseRecyclerAdapter<FriendlyMessage,
+//            MessageViewHolder>(
+//    FriendlyMessage.class,
+//    R.layout.item_message,
+//    MessageViewHolder.class,
+//            mFirebaseDatabaseReference.child(MESSAGES_CHILD))
+//
+//    {
+//
+//        @Override
+//        protected void populateViewHolder (MessageViewHolder viewHolder,
+//            FriendlyMessage friendlyMessage,int position){
+//        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+//        viewHolder.messageTextView.setText(friendlyMessage.getText());
+//        viewHolder.messengerTextView.setText(friendlyMessage.getName());
+//        if (friendlyMessage.getPhotoUrl() == null) {
+//            viewHolder.messengerImageView
+//                    .setImageDrawable(ContextCompat
+//                            .getDrawable(MainActivity.this,
+//                                    R.drawable.ic_account_circle_black_36dp));
+//        } else {
+//            Glide.with(MainActivity.this)
+//                    .load(friendlyMessage.getPhotoUrl())
+//                    .into(viewHolder.messengerImageView);
+//        }
+//    }
+//    }
+//
+//    ;
+//
+//    mFirebaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver()
+//
+//    {
+//        @Override
+//        public void onItemRangeInserted ( int positionStart, int itemCount){
+//        super.onItemRangeInserted(positionStart, itemCount);
+//        int friendlyMessageCount = mFirebaseAdapter.getItemCount();
+//        int lastVisiblePosition =
+//                mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
+//        // If the recycler view is initially being loaded or the
+//        // user is at the bottom of the list, scroll to the bottom
+//        // of the list to show the newly added message.
+//        if (lastVisiblePosition == -1 ||
+//                (positionStart >= (friendlyMessageCount - 1) &&
+//                        lastVisiblePosition == (positionStart - 1))) {
+//            mMessageRecyclerView.scrollToPosition(positionStart);
+//        }
+//    }
+//    }
+//
+//    );
+//
+//    mMessageRecyclerView.setLayoutManager(mLinearLayoutManager);
+//    mMessageRecyclerView.setAdapter(mFirebaseAdapter);
 
-    private void clickFab(){
+    private void clickFab() {
         fab.callOnClick();
     }
 
     //VIEWS
-    private void initViews(){
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+    private void initViews() {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
@@ -249,6 +362,7 @@ public class MainActivity extends AppCompatActivity
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
     }
+
     private ArrayList<ImageHelper> prepareData() {
         ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
         for (int i = 0; i < image_names.length; i++) {
@@ -299,8 +413,8 @@ public class MainActivity extends AppCompatActivity
 //                return true;
 //            }
         }
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -319,7 +433,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the added Group Label action
         } else if (id == R.id.nav_share) {
             // Handle the share action
-      }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
