@@ -9,7 +9,6 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <!-- This code below is if you want to show a location of where this photo was taken at -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Needed only if your app targets Android 5.0 (API level 21) or higher. -->
@@ -46,12 +45,6 @@
         <activity
             android:name=".CameraActivity"
             android:exported="true"></activity>
-        <activity
-            android:name=".FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme"></activity>
-        <activity android:name=".SelectImageActivity"></activity>
 
         <service android:name=".DatabaseActivitys.CloudMessagingService">
             <intent-filter>
@@ -65,12 +58,18 @@
         </service>
 
         <activity
-            android:name=".SplashScreen" android:theme="@style/SplashTheme">
+            android:name=".SplashScreen"
+            android:theme="@style/SplashTheme">
             <intent-filter>
-               <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".DetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

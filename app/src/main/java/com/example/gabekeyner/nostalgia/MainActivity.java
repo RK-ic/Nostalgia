@@ -1,7 +1,10 @@
 package com.example.gabekeyner.nostalgia;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,23 +16,41 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
-    FloatingActionButton fab, floatingActionButton1, floatingActionButton2, floatingActionButton3;
-    Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise;
+    FloatingActionButton fab, fabPhoto, fabVideo, floatingActionButton1, floatingActionButton2, floatingActionButton3;
+    Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
+
+    public static final String TAG = MainActivity.class.getSimpleName();
+
+    public static final int REQUEST_TAKE_PHOTO = 0;
+    public static final int REQUEST_TAKE_VIDEO = 1;
+    public static final int REQUEST_PICK_PHOTO = 2;
+    public static final int REQUEST_PICK_VIDEO = 3;
+
+    public static final int MEDIA_TYPE_IMAGE = 4;
+    public static final int MEDIA_TYPE_VIDEO = 5;
+
+    private Uri mMediaUri;
 
     private final String image_names[] = {
             "Image",
@@ -136,6 +157,8 @@ public class MainActivity extends AppCompatActivity
         initViews();
         fabAnimations();
         fabClickable();
+        fabPhoto.startAnimation(stayhidden_fab);
+        fabVideo.startAnimation(stayhidden_fab);
 
         fab.postDelayed(new Runnable() {
             @Override
@@ -160,6 +183,35 @@ public class MainActivity extends AppCompatActivity
 
 
 }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PICK_PHOTO) {
+                if (data != null) {
+                    mMediaUri = data.getData();
+                }
+                Intent intent = new Intent(this, CameraActivity.class);
+                intent.setData(mMediaUri);
+                startActivity(intent);
+            }
+            else if (requestCode == REQUEST_TAKE_VIDEO) {
+                Intent intent = new Intent (Intent.ACTION_VIEW, mMediaUri);
+                intent.setDataAndType(mMediaUri, "video/*");
+                startActivity(intent);
+            }
+            else if (resultCode == REQUEST_PICK_VIDEO) {
+                if (data != null) {
+                    Log.i(TAG, "Video content URI: " + data.getData());
+                    Toast.makeText(this, "Video content URI: " + data.getData(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        else if (resultCode != RESULT_CANCELED) {
+            Toast.makeText(this, "Sorry, there was an error!", Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void fabAnimations() {
         //ANIMATION LAYOUTS
@@ -169,16 +221,58 @@ public class MainActivity extends AppCompatActivity
         show_fab3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_show3);
         rotate_anticlockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_anticlockwise);
         rotate_clockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_clockwise);
+        stayhidden_fab = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_stayhidden);
 
         //MY FLOATING ACTION BUTTONS
         fab = (FloatingActionButton) findViewById(R.id.fab);
         floatingActionButton1 = (FloatingActionButton) findViewById(R.id.floatingActionButton1);
         floatingActionButton2 = (FloatingActionButton) findViewById(R.id.floatingActionButton2);
         floatingActionButton3 = (FloatingActionButton) findViewById(R.id.floatingActionButton3);
+        fabPhoto = (FloatingActionButton) findViewById(R.id.fabPhoto);
+        fabVideo = (FloatingActionButton) findViewById(R.id.fabVideo);
 
     }
 
     private void fabClickable() {
+
+        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isOpen) {
+                    floatingActionButton2.startAnimation(rotate_anticlockwise);
+
+                    floatingActionButton1.startAnimation(hide_fab);
+                    floatingActionButton3.startAnimation(hide_fab);
+
+                    fabPhoto.startAnimation(show_fab2);
+                    fabVideo.startAnimation(show_fab3);
+
+                    fabPhoto.setClickable(true);
+                    fabVideo.setClickable(true);
+                    floatingActionButton2.setClickable(true);
+                    floatingActionButton1.setClickable(false);
+                    floatingActionButton3.setClickable(false);
+
+                    isOpen = false;
+
+                }else {
+                    fabPhoto.startAnimation(hide_fab);
+                    fabVideo.startAnimation(hide_fab);
+
+                    fabPhoto.setClickable(false);
+                    fabVideo.setClickable(false);
+
+                    floatingActionButton1.startAnimation(show_fab2);
+                    floatingActionButton3.startAnimation(show_fab3);
+
+                    floatingActionButton1.setClickable(true);
+                    floatingActionButton2.setClickable(true);
+                    floatingActionButton3.setClickable(true);
+
+                    isOpen = true;
+                }
+            }
+        });
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +284,9 @@ public class MainActivity extends AppCompatActivity
                     floatingActionButton1.startAnimation(hide_fab);
                     floatingActionButton2.startAnimation(hide_fab);
                     floatingActionButton3.startAnimation(hide_fab);
+
+                    fabPhoto.startAnimation(stayhidden_fab);
+                    fabVideo.startAnimation(stayhidden_fab);
 
                     floatingActionButton1.setClickable(false);
                     floatingActionButton2.setClickable(false);
@@ -205,9 +302,15 @@ public class MainActivity extends AppCompatActivity
                     floatingActionButton2.startAnimation(show_fab);
                     floatingActionButton3.startAnimation(show_fab3);
 
+                    fabPhoto.startAnimation(stayhidden_fab);
+                    fabVideo.startAnimation(stayhidden_fab);
+
                     floatingActionButton1.setClickable(true);
                     floatingActionButton2.setClickable(true);
                     floatingActionButton3.setClickable(true);
+
+                    fabPhoto.setClickable(false);
+                    fabVideo.setClickable(false);
 
                     isOpen = true;
                 }
@@ -216,23 +319,89 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,CameraActivity.class);
-                startActivity(intent);
+                mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                if (mMediaUri == null) {
+                    Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.",
+                            Toast.LENGTH_SHORT).show();
+                }
+                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
             }
         });
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+        fabPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SelectImageActivity.class);
-                startActivity(intent);
+                Intent pickPhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                pickPhotoIntent.setType("image/*");
+                startActivityForResult(pickPhotoIntent, REQUEST_PICK_PHOTO);
+            }
+        });
+        fabVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pickVideoIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                pickVideoIntent.setType("video/*");
+                startActivityForResult(pickVideoIntent, REQUEST_PICK_VIDEO);
             }
         });
         floatingActionButton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
+                if (mMediaUri == null) {
+                    Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent takeVideoIntent = new Intent (MediaStore.ACTION_VIDEO_CAPTURE);
+                    takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
+                    startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
+                }
             }
         });
+    }
+
+    private Uri getOutputMediaFileUri(int mediaType) {
+        //check for external storage
+        if (isExternalStorageAvailable()) {
+            // get the URI
+            File mediaStorageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            String fileName = "";
+            String fileType = "";
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+
+            if (mediaType == MEDIA_TYPE_IMAGE) {
+                fileName = "IMG_" + timeStamp;
+                fileType = ".jpg";
+            } else if (mediaType == MEDIA_TYPE_VIDEO) {
+                fileName = "VID_" + timeStamp;
+                fileType = ".mp4";
+            } else {
+                return null;
+            }
+            File mediaFile;
+            try {
+                mediaFile = File.createTempFile(fileName, fileType, mediaStorageDir);
+                Log.i(TAG, "File: " + Uri.fromFile(mediaFile));
+
+                return Uri.fromFile(mediaFile);
+            } catch (IOException e) {
+                Log.e(TAG, "Error creating file: " + mediaStorageDir.getAbsolutePath() + fileName + fileType);
+            }
+        }
+            // something went wrong
+        return null;
+    }
+
+    private boolean isExternalStorageAvailable(){
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private void clickFab(){
