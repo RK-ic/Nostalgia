@@ -74,7 +74,7 @@
         android:tint="@color/colorAccent"
         android:adjustViewBounds="true"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_menu_camera" />
+        app:srcCompat="@drawable/ic_camera_black_24dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="70dp"
@@ -96,8 +96,42 @@
 
     <android.support.design.widget.FloatingActionButton
         android:clickable="true"
-        app:srcCompat="@drawable/vr"
+        app:srcCompat="@drawable/ic_videocam_black_24dp"
         android:id="@+id/floatingActionButton3"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/floatingActionButton1"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton1"
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButton1"
+        app:backgroundTint="@color/colorPrimary"
+        android:tint="@color/colorAccent"
+        android:adjustViewBounds="true"
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        android:id="@+id/fabPhoto"
+        app:layout_constraintBottom_toTopOf="@+id/fab"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        android:tint="@color/colorAccent"
+        android:adjustViewBounds="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_image_black_24dp"
+        android:focusable="false" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_movie_black_24dp"
+        android:id="@+id/fabVideo"
         android:layout_marginStart="16dp"
         app:layout_constraintLeft_toRightOf="@+id/floatingActionButton1"
         tools:layout_constraintTop_creator="1"
