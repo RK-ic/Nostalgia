@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
 
     public RecyclerView recyclerView;
     FloatingActionButton fab, fabPhoto, fabVideo, floatingActionButton1, floatingActionButton2, floatingActionButton3;
-    Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise;
+    Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
 
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -157,8 +157,8 @@ public class MainActivity extends AppCompatActivity
         initViews();
         fabAnimations();
         fabClickable();
-        fabPhoto.startAnimation(hide_fab);
-        fabVideo.startAnimation(hide_fab);
+        fabPhoto.startAnimation(stayhidden_fab);
+        fabVideo.startAnimation(stayhidden_fab);
 
         fab.postDelayed(new Runnable() {
             @Override
@@ -215,6 +215,7 @@ public class MainActivity extends AppCompatActivity
         show_fab3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_show3);
         rotate_anticlockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_anticlockwise);
         rotate_clockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_clockwise);
+        stayhidden_fab = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_stayhidden);
 
         //MY FLOATING ACTION BUTTONS
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -249,7 +250,7 @@ public class MainActivity extends AppCompatActivity
                     isOpen = false;
 
                 }else {
-                    floatingActionButton2.startAnimation(rotate_clockwise);
+//                    floatingActionButton2.startAnimation(rotate_clockwise);
 
                     fabPhoto.startAnimation(hide_fab);
                     fabVideo.startAnimation(hide_fab);
@@ -280,6 +281,9 @@ public class MainActivity extends AppCompatActivity
                     floatingActionButton2.startAnimation(hide_fab);
                     floatingActionButton3.startAnimation(hide_fab);
 
+                    fabPhoto.startAnimation(stayhidden_fab);
+                    fabVideo.startAnimation(stayhidden_fab);
+
                     floatingActionButton1.setClickable(false);
                     floatingActionButton2.setClickable(false);
                     floatingActionButton3.setClickable(false);
@@ -294,7 +298,8 @@ public class MainActivity extends AppCompatActivity
                     floatingActionButton2.startAnimation(show_fab);
                     floatingActionButton3.startAnimation(show_fab3);
 
-
+                    fabPhoto.startAnimation(stayhidden_fab);
+                    fabVideo.startAnimation(stayhidden_fab);
 
                     floatingActionButton1.setClickable(true);
                     floatingActionButton2.setClickable(true);
