@@ -22,6 +22,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+
+
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
         <!-- android:authorities="com.example.gabekeyner.nostalgia.fileprovider" -->
@@ -45,13 +47,19 @@
         </activity>
         <activity
             android:name=".CameraActivity"
-            android:exported="true"></activity>
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen"
-            android:theme="@style/FullscreenTheme"></activity>
-        <activity android:name=".SelectImageActivity"></activity>
+            android:theme="@style/FullscreenTheme">
+
+        </activity>
+        <activity android:name=".SelectImageActivity">
+
+        </activity>
 
         <service android:name=".DatabaseActivitys.CloudMessagingService">
             <intent-filter>
@@ -71,6 +79,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
                 </intent-filter>
         </activity>
+
+        <provider
+            android:name=".NostalgiaContentProvider"
+            android:authorities="com.example.gabekeyner.nostalgia.NostalgiaContentProvider"
+            android:exported="true"
+            android:label="my provider"
+            android:syncable="true"/>
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+                   android:value="@string/facebook_app_id"/>
     </application>
 
 </manifest>

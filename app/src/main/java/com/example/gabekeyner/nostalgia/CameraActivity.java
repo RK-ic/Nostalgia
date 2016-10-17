@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareButton;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -27,11 +32,16 @@ public class CameraActivity extends AppCompatActivity {
     private Button selectBtn;
     private Button takeBtn;
     String mCurrentPhotoPath;
+    static Bitmap currentPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_camera);
+
+
+
 
         //casting the ImageView
         mImageView = (ImageView) findViewById(R.id.mImageView);
@@ -53,6 +63,28 @@ public class CameraActivity extends AppCompatActivity {
         //mProgressBar = (ProgressBar)findViewById(R.id.progress);
                 // mProgressBar.setMax(100);
 
+        // TODO [.setContentDescription(String.valueOf(currentPhoto))]
+        // not sure if this is the correct code but essentially we want
+        // to be able to send a current photo to facebook
+        ShareButton sharebutton = (ShareButton)findViewById(R.id.share);
+
+        SharePhoto photo = new SharePhoto.Builder()
+                .setImageUrl(Uri.parse("https://github.com/RK-ic/Nostalgia"))
+                .setCaption("Nostalgia Post")
+                .setBitmap(currentPhoto)
+                .build();
+        SharePhotoContent content = new SharePhotoContent.Builder()
+                .addPhoto(photo)
+                .build();
+
+        sharebutton.setShareContent(content);
+
+
+        //        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+//                .setContentUrl(Uri.parse("https://github.com/RK-ic/Nostalgia"))
+//                .setContentTitle("Nostalgia Post")
+//                .setContentDescription(String.valueOf(currentPhoto))
+//                .build();
     }
 
     @Override
