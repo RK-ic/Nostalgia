@@ -50,9 +50,6 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostLi
     public void onBindViewHolder(final PostListAdapter.PostListViewHolder holder, final int position) {
         TextView title = holder.title;
 
-
-
-
         title.setText(postArray[position].getTitle());
 
 
@@ -94,7 +91,7 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostLi
 
     @Override
     public int getItemCount() {
-        return postArray.length;
+        return 1;
     }
 
 
