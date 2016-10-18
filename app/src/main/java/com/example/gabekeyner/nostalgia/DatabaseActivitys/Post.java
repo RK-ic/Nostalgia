@@ -9,6 +9,11 @@ public class Post {
     public String imageURL;
     public String title;
 
+    public Post(String imageURL, String title) {
+        this.imageURL = imageURL;
+        this.title = title;
+    }
+
     public String getImageURL() {
         return imageURL;
     }
