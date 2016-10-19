@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
 
+    //Handles the the array for the database
     Post[] postArray;
 
 
@@ -487,6 +488,7 @@ public class MainActivity extends AppCompatActivity
         return imageHelpers;
 
     }
+
 
 
     @Override

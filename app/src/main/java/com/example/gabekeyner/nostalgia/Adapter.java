@@ -40,13 +40,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
         return new ViewHolder(itemView);
 
-//        View itemView =inflater.inflate(R.layout.card_view, parent,false);
-//        Adapter.ViewHolder holder = new Adapter.ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final Adapter.ViewHolder holder, final int position) {
-//        holder.mTextView.setText(images.get(position).getImageHelper_name());
+
         final ImageHelper photo = images.get(position);
 
         holder.mTextView.setText(photo.getImageHelper_name());
