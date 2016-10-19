@@ -25,6 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.gabekeyner.nostalgia.DatabaseActivitys.Post;
+import com.facebook.CallbackManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
+    CallbackManager callbackManager;
 
     public static final String TAG = "Nostalgia";
     private DatabaseReference mDatabase;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
@@ -438,6 +441,7 @@ public class MainActivity extends AppCompatActivity
             // Handle the added Group Label action
         } else if (id == R.id.nav_share) {
             // Handle the share action
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
