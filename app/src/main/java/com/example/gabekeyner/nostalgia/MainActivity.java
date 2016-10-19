@@ -25,6 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.gabekeyner.nostalgia.DatabaseActivitys.Post;
+import com.facebook.CallbackManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,12 +36,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
+    CallbackManager callbackManager;
 
     public static final String TAG = "Nostalgia";
     private DatabaseReference mDatabase;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
 
+    //Handles the the array for the database
     Post[] postArray;
 
 
@@ -64,13 +68,106 @@ public class MainActivity extends AppCompatActivity
 
     private Uri mMediaUri;
 
+    private final String image_names[] = {
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image",
+            "Image"
+    };
 
+    private final String image_urls[] = {
+            "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
+            "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
+            "https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg",
+            "http://kingofwallpapers.com/city-pictures/city-pictures-021.jpg",
+            "http://photos.mandarinoriental.com/is/image/MandarinOriental/excelsior-exterior-home?$HomepageHeroImage$",
+            "http://best-wallpaper.net/wallpaper/1920x1200/1109/Beautiful-abstract-flight-line_1920x1200.jpg",
+            "http://lh5.ggpht.com/_Gq1jO6iuU2U/TTtbe7YWMAI/AAAAAAAAHfE/wq8EJ6fc4Yk/s9000/Abstract%2BTunnel%2BVision%2BHD%2BWallpaper.jpg",
+            "http://cdn.wallpapersafari.com/4/13/4n5qmQ.jpg",
+            "http://www.rajeshagrawal.com/wp-content/uploads/2015/02/london-at-night-desktop-wallpaper-beautiful-london-city-wallpapers-with-hd-gallery2.jpg",
+            "https://images5.alphacoders.com/306/306940.jpg",
+            "http://i2.cdn.turner.com/cnnnext/dam/assets/150306145109-beautiful-japan-kawachi-wisteria-super-169.jpg",
+            "http://netupd8.com/walls/WallPaperHD039.resized.jpg",
+            "http://wallpaperspro.net/wp-content/uploads/2016/08/Beautiful-Images-free-1134x750.jpg",
+            "http://freephotos.atguru.in/hdphotos/beautiful-wallpapers/beautiful-wallpapers-6.jpg",
+            "http://funnyneel.com/image/files/i/01-2014/beautiful-trees-v.jpg",
+            "http://cdn.thecoolist.com/wp-content/uploads/2016/05/Japanese-Cherry-beautiful-tree-960x540.jpg",
+            "http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-13.jpg",
+            "https://iso.500px.com/wp-content/uploads/2016/04/stock-photo-150595123-1500x1000.jpg",
+            "http://wallpaperwarrior.com/beautiful-wallpapers/beautiful-wallpapers-17/",
+            "http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-11.jpg",
+            "https://static.pexels.com/photos/17682/pexels-photo.jpg",
+            "http://1.bp.blogspot.com/_Zw41kxI2akg/TJ9vsPZ76NI/AAAAAAAACvs/pk94qBVMJrM/s1600/natura_iarna_wallpaper.jpg",
+            "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
+            "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
+            "https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg",
+            "http://kingofwallpapers.com/city-pictures/city-pictures-021.jpg",
+            "http://photos.mandarinoriental.com/is/image/MandarinOriental/excelsior-exterior-home?$HomepageHeroImage$",
+            "http://best-wallpaper.net/wallpaper/1920x1200/1109/Beautiful-abstract-flight-line_1920x1200.jpg",
+            "http://lh5.ggpht.com/_Gq1jO6iuU2U/TTtbe7YWMAI/AAAAAAAAHfE/wq8EJ6fc4Yk/s9000/Abstract%2BTunnel%2BVision%2BHD%2BWallpaper.jpg",
+            "http://cdn.wallpapersafari.com/4/13/4n5qmQ.jpg",
+            "http://www.rajeshagrawal.com/wp-content/uploads/2015/02/london-at-night-desktop-wallpaper-beautiful-london-city-wallpapers-with-hd-gallery2.jpg",
+            "https://images5.alphacoders.com/306/306940.jpg",
+            "http://i2.cdn.turner.com/cnnnext/dam/assets/150306145109-beautiful-japan-kawachi-wisteria-super-169.jpg",
+            "http://netupd8.com/walls/WallPaperHD039.resized.jpg",
+            "http://wallpaperspro.net/wp-content/uploads/2016/08/Beautiful-Images-free-1134x750.jpg",
+            "http://freephotos.atguru.in/hdphotos/beautiful-wallpapers/beautiful-wallpapers-6.jpg",
+            "http://funnyneel.com/image/files/i/01-2014/beautiful-trees-v.jpg",
+            "http://cdn.thecoolist.com/wp-content/uploads/2016/05/Japanese-Cherry-beautiful-tree-960x540.jpg",
+            "http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-13.jpg",
+            "https://iso.500px.com/wp-content/uploads/2016/04/stock-photo-150595123-1500x1000.jpg",
+            "http://wallpaperwarrior.com/beautiful-wallpapers/beautiful-wallpapers-17/",
+            "http://www.technocrazed.com/wp-content/uploads/2015/12/beautiful-wallpaper-download-11.jpg",
+            "https://static.pexels.com/photos/17682/pexels-photo.jpg",
+            "http://1.bp.blogspot.com/_Zw41kxI2akg/TJ9vsPZ76NI/AAAAAAAACvs/pk94qBVMJrM/s1600/natura_iarna_wallpaper.jpg"
+    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
@@ -373,11 +470,25 @@ public class MainActivity extends AppCompatActivity
 //        PostListAdapter adapter = new PostListAdapter(postArray,getApplicationContext());
 //        recyclerView.setAdapter(adapter);
 //
+        ArrayList<ImageHelper> imageHelpers = prepareData();
+        Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
+        recyclerView.setAdapter(mAdapter);
 
-//        ArrayList<ImageHelper> imageHelpers = prepareData();
-//        Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
-//        recyclerView.setAdapter(mAdapter);
     }
+
+    private ArrayList<ImageHelper> prepareData() {
+        ArrayList<ImageHelper> imageHelpers = new ArrayList<>();
+        for (int i = 0; i < image_names.length; i++) {
+            ImageHelper imageHelper = new ImageHelper();
+            imageHelper.setImageHelper_name(image_names[i]);
+            imageHelper.setImageHelper_url(image_urls[i]);
+            imageHelpers.add(imageHelper);
+
+        }
+        return imageHelpers;
+
+    }
+
 
 
     @Override
@@ -438,12 +549,14 @@ public class MainActivity extends AppCompatActivity
             // Handle the added Group Label action
         } else if (id == R.id.nav_share) {
             // Handle the share action
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
 }

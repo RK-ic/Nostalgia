@@ -2,8 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--TODO ASK CHRIS IF HE THINKS MORE MATERIAL DESIGN COLORS-->
 
+        <item name="android:windowContentTransitions">true</item>
         <item name="colorPrimary">@color/LightColor2</item>
         <item name="colorPrimaryDark">@color/DarkColor2</item>
         <item name="colorAccent">@color/Accent</item>
