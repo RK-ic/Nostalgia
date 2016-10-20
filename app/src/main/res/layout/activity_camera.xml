@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.gabekeyner.nostalgia.CameraActivity"
-    android:background="@color/Accent">
+    android:background="#000000">
 
 
     <!--<com.facebook.share.widget.ShareButton-->
@@ -18,43 +18,51 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="365dp"
-        android:layout_height="67dp"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
         android:hint="   Write a caption..."
         android:textColor="@android:color/white"
         android:elevation="2dp"
         android:background="@color/DarkColor"
         android:isScrollContainer="true"
         android:soundEffectsEnabled="true"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-    <Button
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/cameraImageView"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
         android:text="Post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:fabSize="normal"
+        app:backgroundTint="@color/cardview_shadow_start_color"
+        android:tint="@color/MainColor"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        app:elevation="24dp"
         android:id="@+id/post_button"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintHorizontal_bias="1.0"/>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="567dp"
-        android:id="@+id/cameraImageView"
-        />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/cameraImageView"
+        app:layout_constraintRight_toRightOf="@+id/cameraImageView"
+        app:layout_constraintTop_toBottomOf="@+id/cameraImageView" />
     <!--<VideoView-->
         <!--android:layout_width="384dp"-->
         <!--android:layout_height="567dp"-->

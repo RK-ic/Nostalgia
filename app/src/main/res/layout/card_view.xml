@@ -15,8 +15,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:transitionName="imageSource"
+        android:transitionName="detailTransition"
         android:adjustViewBounds="true"
+        android:onClick="click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

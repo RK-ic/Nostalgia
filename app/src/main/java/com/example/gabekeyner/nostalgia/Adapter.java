@@ -20,21 +20,15 @@ import java.util.Random;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-
     private ArrayList<ImageHelper> images;
     private Context context;
-
-
     int previousPosition = 0;
-
 
     public Adapter(Context context, ArrayList<ImageHelper> images) {
         this.images = images;
         this.context = context;
 
     }
-
-
     @Override
     public Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
@@ -46,18 +40,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(final Adapter.ViewHolder holder, final int position) {
 
         final ImageHelper photo = images.get(position);
-
         holder.mTextView.setText(photo.getImageHelper_name());
-
         PicassoClient.downloadImage(context, photo.getImageHelper_url(), holder.mImageView);
-
         Picasso.with(context)
                 .load(images.get(position)
                         .getImageHelper_url())
                 .resize(800, 500)
                 .centerCrop()
                 .into(holder.mImageView);
-
         //FOR ANIMATION
         if (position > previousPosition) {
             //We are scrolling down
@@ -66,20 +56,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             AnimationUtil.animate(holder, false);
         }
         previousPosition = position;
-
         setScaleAnimation(holder.mImageView);
         setFadeAnimation(holder.mTextView);
         setAnimation(holder.mImageView, lastPosition);
-
         holder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Calls the Open Detail Activity Method
                 openDetailActivity(photo.getImageHelper_name(), photo.getImageHelper_url());
+
             }
-
         });
-
         holder.mImageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -89,39 +76,31 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return images.size();
     }
-
-
     //Handles the send the data to the Detail Activity
     private void openDetailActivity(String title, String imageUrl) {
         Intent intent = new Intent(context, DetailActivity.class);
-
         intent.putExtra("title", title);
         intent.putExtra("imageUrl", imageUrl);
-
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this, )
         context.startActivity(intent);
     }
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public ImageView mImageView;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                 }
             });
-
-
             mTextView = (TextView) itemView.findViewById(R.id.textView);
             mImageView = (ImageView) itemView.findViewById(R.id.imageView);
         }

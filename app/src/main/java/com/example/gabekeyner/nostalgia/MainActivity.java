@@ -44,14 +44,12 @@ public class MainActivity extends AppCompatActivity
     public ImageView mImageView;
     private StorageReference mStorage;
 
-
     FloatingActionButton fab, fabPhoto, fabVideo, floatingActionButton1, floatingActionButton2, floatingActionButton3;
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
 
     //Handles the the array for the database
     Post[] postArray;
-
 
     private final String image_names[] = {
             "City",
@@ -104,8 +102,6 @@ public class MainActivity extends AppCompatActivity
     };
 
     private final String image_urls[] = {
-
-
             "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
             "https://lh3.googleusercontent.com/EItotXzxREzjDLufjmG1gj4_R9EHpDfXti49n7cJZzBBUucqWdeqIBEL0QwAWjnHhgiunMr0mA0tvbR5L-SZFORAT4WbTmfARLQV9EMVYfJkwq-IaVaN8DY8fgRsmMSXuBKdYb7_rwbbGxIs4ABY4Ldea3m32_ZoiYvrTlpJWVxIm-bQNhfE6pPM2Df0-Djv0rP-mh4U-EOY8TX4cKxFt6S9PA1EtLQV9x2zfj1D7ofEo89ynHiUMeC3SAexN74tZEbmkormZuzO_3SHXyqj1I8ovZkYQoa0ORQUf4rzX4M0N3KGdUPchpOTzWMJY3RvN8JZUL-R0OIP68-95HcDIdA_fprlmRhbuo2CqEPz-HLTAag3qz69P_OjGsunyMY6Pdx04Iyh3pKmknsawsazAXOch55_0gPlmgxToOLkI9kwHbt5Qpd9PEmDf374CJKEfH-b3KvDTgukF839_yB_IoD1ohBXTL1AhE4T0qocqQXChCZTTV0I00VutUmVkK4KXDM7SVSuTKBX68de_i_GAA-_oCkKrdu5QHd39OjrndUY-zKqNehKT7MFKA_OLAPWgFcuC3gFrwWfMWI3PTD30zYGou6opJvRXYgR3F5EfZIIvO_G=w1067-h643-no",
             "https://lh3.googleusercontent.com/pVCbNVUveYcQYJiSUPFYLJK6nWWffZKNf7GCfJo9fPkOu7gO7wDLcEfKwNIu1dvExWNtkldaT4L9cJ3XZ88wM51XXX8of4zjBvVuVTUZoiMLs1k22v_31qiyNVBelS6tjjcBTsMHBbkHjvcFGs2x4hZmg1Rf4dW3UjSSxb-d4nrYmu3gpWaA3zOcMhmeeUhbuCmm-75Tpd9OETpmrfdC6umOTmwNwxbVgVaky_7bTAz_GnMfjEtFfTmO5wCSSRH98eTBjqjQG0OVPtcEcaa9n0SK3gH9Y_TXstCvmyg2GS94CRzIh7DzJKAO5XDvmrL4ZmdD2tbPVzm_XoYR2DmpIqJITbBLDv0vUtGdhCT02zix7Pe4PMCyRte5ajMEr9uxyAdgBVQW40dj3gJcjkyvlbM1dM-uHEKB70f5R1l7oVuKWpKngBZijNQwyxr4bp1FP9aCF70t07-CVKD5yz_0rSuwfjIiM6KDQkFwDRxLxGd0wid7B5LT_8KWDspUg13GTwXDm38rQGDvYkXOLtphZmeYyV6ViAXjWhY2O-0fxDheZMO5fGbEnDLXhk8ZVxBupExLvBp9nUQIh5IU7FsUAPj6_-WXHtHpP7RJxaCLF6ARrz7b=w1022-h1108-no",
@@ -166,8 +162,6 @@ public class MainActivity extends AppCompatActivity
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
 
-        mImageView = (ImageView) findViewById(R.id.cameraImageView);
-
         initViews();
         fabAnimations();
         fabClickable();
@@ -220,8 +214,6 @@ public class MainActivity extends AppCompatActivity
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
-
     }
 
 
@@ -333,10 +325,6 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                intent.putExtra(CameraActivity.ACTIVITY_INTENTION, CameraActivity.TAKE_PHOTO);
-                startActivity(intent);
-
             }
         });
         fabPhoto.setOnClickListener(new View.OnClickListener() {
@@ -362,11 +350,9 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 intent.putExtra(CameraActivity.ACTIVITY_INTENTION, CameraActivity.VIDEO_SHOOTER);
                 startActivity(intent);
-
             }
         });
     }
-
 
     private void clickFab() {
         fab.callOnClick();
@@ -378,10 +364,6 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
-
-//        PostListAdapter adapter = new PostListAdapter(postArray,getApplicationContext());
-//        recyclerView.setAdapter(adapter);
-//
         ArrayList<ImageHelper> imageHelpers = prepareData();
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
@@ -399,7 +381,6 @@ public class MainActivity extends AppCompatActivity
         return imageHelpers;
 
     }
-
 
     @Override
     public void onBackPressed() {
@@ -434,10 +415,6 @@ public class MainActivity extends AppCompatActivity
                 StaggeredGridLayoutManager mStaggeredVerticalLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(mStaggeredVerticalLayoutManager);
                 break;
-//            noinspection SimplifiableIfStatement
-//            if (id == R.id.action_settings) {
-//                return true;
-//            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -466,5 +443,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }
