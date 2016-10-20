@@ -25,7 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.example.gabekeyner.nostalgia.DatabaseActivitys.Post;
-import com.example.gabekeyner.nostalgia.DatabaseActivitys.PostListAdapter;
+import com.facebook.CallbackManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public RecyclerView recyclerView;
+    CallbackManager callbackManager;
 
     public static final String TAG = "Nostalgia";
     private DatabaseReference mDatabase;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
 
+    //Handles the the array for the database
     Post[] postArray;
 
 
@@ -112,6 +114,7 @@ public class MainActivity extends AppCompatActivity
             "Image",
             "Image"
     };
+
     private final String image_urls[] = {
             "https://lh3.googleusercontent.com/jRAbvlcfEQ9n4-v4gHy1PXaqyLb4YRcwUkGNK2EAXqw-AmRKD9TUKwTv_clO22qt5qnZFRl49jeQUK4TgiWIs4YsUWGEM-Kea0TxIML5OZdpWFYtGDVTcmILSM3Db_4OyC6M8tNriXEY_LMfZHwNKS_GkYKE-ZQzxiemIbH4L53bbjEVz9kwgt_qZb9fJ7h4S13f_VQZjoMjTleeBbNzP0dqtkDomkX3KL-FyKA8-Pki1Nib9fcpK_uY1Mby9DW6H0v4sZ8mGhmfdBuLGttyJD_tg81LSe-DLsYpoJPbqbwHBXDexGNo9Zo2939UulZ6Z1DihDcfhVWRxVjS6TDBo0mglkQoQBfocFyvE-hOvhyMEhzbKfc_DN8_h3Xaj_zp19qNLyP2TmY7A6U-Y3zoUCcdkXYCled-ary6dgMpmB7lry7viS6B7sko77VoL9lOUOnfTbo6--zLNZclkDqmRA6LCPhXazicHMaGOlst_4oGdhaagHwWvA0wwuAGKFQkevbNncQIp6OhnMZYtZPUtniiWXeOkgI4l1a1vf8mBKifhp3CVaJmgdrQh7GLSxRdM2jK1IAp-3lSqwBGwjk7qXAXudAgqUZAz6lA_ZcZnJ5WgP-Llg=w1279-h960-no",
             "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
@@ -164,6 +167,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
@@ -465,9 +469,9 @@ public class MainActivity extends AppCompatActivity
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        PostListAdapter adapter = new PostListAdapter(postArray,getApplicationContext());
-        recyclerView.setAdapter(adapter);
-
+//        PostListAdapter adapter = new PostListAdapter(postArray,getApplicationContext());
+//        recyclerView.setAdapter(adapter);
+//
         ArrayList<ImageHelper> imageHelpers = prepareData();
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
@@ -483,10 +487,7 @@ public class MainActivity extends AppCompatActivity
 
         }
         return imageHelpers;
-
-
     }
-
 
     @Override
     public void onBackPressed() {
@@ -546,12 +547,14 @@ public class MainActivity extends AppCompatActivity
             // Handle the added Group Label action
         } else if (id == R.id.nav_share) {
             // Handle the share action
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
 
 }

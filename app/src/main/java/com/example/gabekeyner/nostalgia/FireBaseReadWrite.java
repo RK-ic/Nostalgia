@@ -17,16 +17,23 @@ public class FireBaseReadWrite {
 
     private static final String TAG = "FirebaseReadWrite";
     // Firebase instance variables
+    //lets me see only the posts
     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference postRef = mRootRef.child("post");
+    DatabaseReference listRef = mRootRef.child("post");
 
 
-    public FireBaseReadWrite writeFirebase(String title,String imageURL){
-        Post post = new Post(title,imageURL);
 
-        mRootRef.child("posts").setValue(post);
-        return null;
-    }
+    // When a user go offline this code will keep there saved data on the device
+    // FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        public FireBaseReadWrite writeFirebase(String title,String imageURL){
+            Post post = new Post(title,imageURL);
+
+            mRootRef.child("posts").setValue(post);
+
+            return null;
+        }
+
 
     public void readFirebase(){
         ValueEventListener postListener = new ValueEventListener() {
