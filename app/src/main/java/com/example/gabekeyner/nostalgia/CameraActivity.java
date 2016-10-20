@@ -7,10 +7,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -51,7 +51,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
     private String filepath;
     private EditText mTitle;
-    private Button postBtn;
+    private FloatingActionButton postBtn;
     private ImageView mImageView;
     private Uri mMediaUri;
 
@@ -77,7 +77,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         mImageView = (ImageView) findViewById(R.id.cameraImageView);
 //        mVideoView = (VideoView) findViewById(R.id.cameraVideoView);
 
-        postBtn = (Button) findViewById(R.id.post_button);
+        postBtn = (FloatingActionButton) findViewById(R.id.post_button);
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -22,7 +22,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private ArrayList<ImageHelper> images;
     private Context context;
-
     int previousPosition = 0;
 
     public Adapter(Context context, ArrayList<ImageHelper> images) {
@@ -87,6 +86,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         intent.putExtra("title", title);
         intent.putExtra("imageUrl", imageUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this, )
         context.startActivity(intent);
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
