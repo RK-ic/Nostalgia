@@ -158,9 +158,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
-
 
         initViews();
         fabAnimations();

@@ -42,7 +42,7 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 textView.startAnimation(upfade);
             }
-        },1500);
+        },2000);
 
 
 
