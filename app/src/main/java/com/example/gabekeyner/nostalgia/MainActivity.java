@@ -325,6 +325,9 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                intent.putExtra(CameraActivity.ACTIVITY_INTENTION, CameraActivity.TAKE_PHOTO);
+                startActivity(intent);
             }
         });
         fabPhoto.setOnClickListener(new View.OnClickListener() {
