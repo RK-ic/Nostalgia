@@ -5,10 +5,6 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by GabeKeyner on 10/19/2016.
- */
-
 public class PicassoClient {
 
     public static void downloadImage (Context context, String imageUrl, ImageView mImageView){
