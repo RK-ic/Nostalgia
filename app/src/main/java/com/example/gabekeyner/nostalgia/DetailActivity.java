@@ -7,12 +7,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
 
-
+    Animation fade_in;
     TextView titleTxt;
     ImageView imageView;
     @Override
@@ -21,6 +23,8 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.detail_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fade_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_detail);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -33,6 +37,9 @@ public class DetailActivity extends AppCompatActivity {
 
         titleTxt = (TextView)findViewById(R.id.detailTitle);
         imageView = (ImageView)findViewById(R.id.detialView);
+        fab.startAnimation(fade_in);
+        titleTxt.startAnimation(fade_in);
+
 
         //Receive Data
         Intent intent = this.getIntent();

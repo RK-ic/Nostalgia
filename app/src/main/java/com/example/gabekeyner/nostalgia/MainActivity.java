@@ -158,9 +158,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
-
 
         initViews();
         fabAnimations();
@@ -325,6 +323,9 @@ public class MainActivity extends AppCompatActivity
         floatingActionButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                intent.putExtra(CameraActivity.ACTIVITY_INTENTION, CameraActivity.TAKE_PHOTO);
+                startActivity(intent);
             }
         });
         fabPhoto.setOnClickListener(new View.OnClickListener() {
