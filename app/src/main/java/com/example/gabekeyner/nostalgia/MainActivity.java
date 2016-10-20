@@ -122,8 +122,12 @@ public class MainActivity extends AppCompatActivity
     };
 
     private final String image_urls[] = {
+
             "gs://nostalgia-2dd3f.appspot.com/Photos/image:26787",
             "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
+
+            "https://lh3.googleusercontent.com/jRAbvlcfEQ9n4-v4gHy1PXaqyLb4YRcwUkGNK2EAXqw-AmRKD9TUKwTv_clO22qt5qnZFRl49jeQUK4TgiWIs4YsUWGEM-Kea0TxIML5OZdpWFYtGDVTcmILSM3Db_4OyC6M8tNriXEY_LMfZHwNKS_GkYKE-ZQzxiemIbH4L53bbjEVz9kwgt_qZb9fJ7h4S13f_VQZjoMjTleeBbNzP0dqtkDomkX3KL-FyKA8-Pki1Nib9fcpK_uY1Mby9DW6H0v4sZ8mGhmfdBuLGttyJD_tg81LSe-DLsYpoJPbqbwHBXDexGNo9Zo2939UulZ6Z1DihDcfhVWRxVjS6TDBo0mglkQoQBfocFyvE-hOvhyMEhzbKfc_DN8_h3Xaj_zp19qNLyP2TmY7A6U-Y3zoUCcdkXYCled-ary6dgMpmB7lry7viS6B7sko77VoL9lOUOnfTbo6--zLNZclkDqmRA6LCPhXazicHMaGOlst_4oGdhaagHwWvA0wwuAGKFQkevbNncQIp6OhnMZYtZPUtniiWXeOkgI4l1a1vf8mBKifhp3CVaJmgdrQh7GLSxRdM2jK1IAp-3lSqwBGwjk7qXAXudAgqUZAz6lA_ZcZnJ5WgP-Llg=w1279-h960-no",
+
             "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
             "https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg",
             "http://kingofwallpapers.com/city-pictures/city-pictures-021.jpg",
@@ -186,6 +190,8 @@ public class MainActivity extends AppCompatActivity
         fabClickable();
         fabPhoto.startAnimation(stayhidden_fab);
         fabVideo.startAnimation(stayhidden_fab);
+        fabPhoto.setClickable(false);
+        fabVideo.setClickable(false);
 
         fab.postDelayed(new Runnable() {
             @Override
@@ -516,7 +522,6 @@ public class MainActivity extends AppCompatActivity
         ArrayList<ImageHelper> imageHelpers = prepareData();
         Adapter mAdapter = new Adapter(getApplicationContext(), imageHelpers);
         recyclerView.setAdapter(mAdapter);
-
     }
 
     private ArrayList<ImageHelper> prepareData() {
