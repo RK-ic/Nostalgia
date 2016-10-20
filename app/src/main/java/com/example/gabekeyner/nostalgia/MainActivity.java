@@ -1,6 +1,7 @@
 package com.example.gabekeyner.nostalgia;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -56,8 +57,10 @@ public class MainActivity extends AppCompatActivity
 
     //Handles the the array for the database
     Post[] postArray;
+    String mCurrentPhotoPath;
+    private Uri file;
 
-
+//    protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 0;
     public static final int REQUEST_TAKE_PHOTO = 0;
     public static final int REQUEST_TAKE_VIDEO = 1;
     public static final int REQUEST_PICK_PHOTO = 2;
@@ -66,9 +69,12 @@ public class MainActivity extends AppCompatActivity
     public static final int MEDIA_TYPE_IMAGE = 4;
     public static final int MEDIA_TYPE_VIDEO = 5;
 
+    static final int PICTURE_RESULT = 1;
+
     private Uri mMediaUri;
 
     private final String image_names[] = {
+            "Chris",
             "Image",
             "Image",
             "Image",
@@ -116,7 +122,12 @@ public class MainActivity extends AppCompatActivity
     };
 
     private final String image_urls[] = {
+
+            "gs://nostalgia-2dd3f.appspot.com/Photos/image:26787",
+            "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
+
             "https://lh3.googleusercontent.com/jRAbvlcfEQ9n4-v4gHy1PXaqyLb4YRcwUkGNK2EAXqw-AmRKD9TUKwTv_clO22qt5qnZFRl49jeQUK4TgiWIs4YsUWGEM-Kea0TxIML5OZdpWFYtGDVTcmILSM3Db_4OyC6M8tNriXEY_LMfZHwNKS_GkYKE-ZQzxiemIbH4L53bbjEVz9kwgt_qZb9fJ7h4S13f_VQZjoMjTleeBbNzP0dqtkDomkX3KL-FyKA8-Pki1Nib9fcpK_uY1Mby9DW6H0v4sZ8mGhmfdBuLGttyJD_tg81LSe-DLsYpoJPbqbwHBXDexGNo9Zo2939UulZ6Z1DihDcfhVWRxVjS6TDBo0mglkQoQBfocFyvE-hOvhyMEhzbKfc_DN8_h3Xaj_zp19qNLyP2TmY7A6U-Y3zoUCcdkXYCled-ary6dgMpmB7lry7viS6B7sko77VoL9lOUOnfTbo6--zLNZclkDqmRA6LCPhXazicHMaGOlst_4oGdhaagHwWvA0wwuAGKFQkevbNncQIp6OhnMZYtZPUtniiWXeOkgI4l1a1vf8mBKifhp3CVaJmgdrQh7GLSxRdM2jK1IAp-3lSqwBGwjk7qXAXudAgqUZAz6lA_ZcZnJ5WgP-Llg=w1279-h960-no",
+
             "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
             "https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg",
             "http://kingofwallpapers.com/city-pictures/city-pictures-021.jpg",
@@ -229,19 +240,22 @@ public class MainActivity extends AppCompatActivity
 
 
 }
+    Bitmap bmp;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PICK_PHOTO) {
+            if (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PICK_PHOTO){
+
                 if (data != null) {
                     mMediaUri = data.getData();
                 }
                 Intent intent = new Intent(this, CameraActivity.class);
-                intent.setData(mMediaUri);
+                intent.setDataAndType(mMediaUri,"photo");
                 startActivity(intent);
-            }
+           }
             else if (requestCode == REQUEST_TAKE_VIDEO) {
                 Intent intent = new Intent (Intent.ACTION_VIEW, mMediaUri);
                 intent.setDataAndType(mMediaUri, "video/*");
@@ -367,17 +381,29 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
-                startActivity(intent);
+
+
+//
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                mMediaUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"fname_" +
+//                        String.valueOf(System.currentTimeMillis()) + ".jpg"));
+//                intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mMediaUri);
+//                startActivityForResult(intent, REQUEST_TAKE_PHOTO);
+//
+////                intent = new Intent(MainActivity.this, CameraActivity.class);
+////                startActivity(intent);
+
+
+                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
+                startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
 
                 mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                 if (mMediaUri == null) {
                     Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.",
                             Toast.LENGTH_SHORT).show();
                 }
-                Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
-                startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
+
 
             }
         });
@@ -412,6 +438,27 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+    }
+    //this method will create and return the path to the image file
+    private File getFile() {
+        File folder = Environment.getExternalStoragePublicDirectory("/From_camera/images");// the file path
+
+        //if it doesn't exist the folder will be created
+        if(!folder.exists())
+        {folder.mkdir();}
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_"+ timeStamp + "_";
+        File image_file = null;
+
+        try {
+            image_file = File.createTempFile(imageFileName,".jpg",folder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mCurrentPhotoPath = image_file.getAbsolutePath();
+        return image_file;
     }
 
 
@@ -558,6 +605,36 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+//TODO THIS IS THE CODE TRYING TO FIX THE REQUEST PHOTO
+
+//    Bitmap photo = (Bitmap) data.getExtras().get("data");
+//
+//    Intent intent = new Intent(this, CameraActivity.class);
+//    intent.putExtra("BitmapImage", photo);
 
 
+//                intent.setDataAndType(photo);
+//                imageView.setImageBitmap(photo);
+
+
+//                Intent intent = new Intent(this, CameraActivity.class);
+//                intent.setData(mMediaUri);
+//                startActivity(intent);
+
+
+//                Bundle extras = data.getExtras();
+
+
+    //                try {
+//                    bmp = MediaStore.Images.Media.getBitmap(getContentResolver(),file);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//                //use imageUri here to access the image
+//
+//                Bundle extras = data.getExtras();
+//
+//                Log.e("URI",mMediaUri.toString());
+//
+//               Bitmap bmp = (Bitmap) extras.get("data");
 }
