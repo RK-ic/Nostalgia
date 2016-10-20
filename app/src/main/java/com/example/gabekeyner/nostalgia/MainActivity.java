@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.gabekeyner.nostalgia.DatabaseActivitys.Post;
@@ -50,7 +52,6 @@ public class MainActivity extends AppCompatActivity
     private DatabaseReference mDatabase;
 
 
-
     FloatingActionButton fab, fabPhoto, fabVideo, floatingActionButton1, floatingActionButton2, floatingActionButton3;
     Animation hide_fab, show_fab, show_fab2, show_fab3, rotate_anticlockwise, rotate_clockwise, stayhidden_fab;
     boolean isOpen = true;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity
     String mCurrentPhotoPath;
     private Uri file;
 
-//    protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 0;
+    //    protected static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 0;
     public static final int REQUEST_TAKE_PHOTO = 0;
     public static final int REQUEST_TAKE_VIDEO = 1;
     public static final int REQUEST_PICK_PHOTO = 2;
@@ -125,9 +126,7 @@ public class MainActivity extends AppCompatActivity
 
             "gs://nostalgia-2dd3f.appspot.com/Photos/image:26787",
             "http://www.hiltonhotels.de/assets/img/destinations/China/china-3.jpg",
-
             "https://lh3.googleusercontent.com/jRAbvlcfEQ9n4-v4gHy1PXaqyLb4YRcwUkGNK2EAXqw-AmRKD9TUKwTv_clO22qt5qnZFRl49jeQUK4TgiWIs4YsUWGEM-Kea0TxIML5OZdpWFYtGDVTcmILSM3Db_4OyC6M8tNriXEY_LMfZHwNKS_GkYKE-ZQzxiemIbH4L53bbjEVz9kwgt_qZb9fJ7h4S13f_VQZjoMjTleeBbNzP0dqtkDomkX3KL-FyKA8-Pki1Nib9fcpK_uY1Mby9DW6H0v4sZ8mGhmfdBuLGttyJD_tg81LSe-DLsYpoJPbqbwHBXDexGNo9Zo2939UulZ6Z1DihDcfhVWRxVjS6TDBo0mglkQoQBfocFyvE-hOvhyMEhzbKfc_DN8_h3Xaj_zp19qNLyP2TmY7A6U-Y3zoUCcdkXYCled-ary6dgMpmB7lry7viS6B7sko77VoL9lOUOnfTbo6--zLNZclkDqmRA6LCPhXazicHMaGOlst_4oGdhaagHwWvA0wwuAGKFQkevbNncQIp6OhnMZYtZPUtniiWXeOkgI4l1a1vf8mBKifhp3CVaJmgdrQh7GLSxRdM2jK1IAp-3lSqwBGwjk7qXAXudAgqUZAz6lA_ZcZnJ5WgP-Llg=w1279-h960-no",
-
             "http://kingofwallpapers.com/city-pictures/city-pictures-001.jpg",
             "https://newevolutiondesigns.com/images/freebies/city-wallpaper-11.jpg",
             "http://kingofwallpapers.com/city-pictures/city-pictures-021.jpg",
@@ -181,8 +180,6 @@ public class MainActivity extends AppCompatActivity
 
 
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
-
-
 
 
         initViews();
@@ -239,7 +236,8 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-}
+    }
+
     Bitmap bmp;
 
     @Override
@@ -247,28 +245,25 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PICK_PHOTO){
+            if (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PICK_PHOTO) {
 
                 if (data != null) {
                     mMediaUri = data.getData();
                 }
                 Intent intent = new Intent(this, CameraActivity.class);
-                intent.setDataAndType(mMediaUri,"photo");
+                intent.setDataAndType(mMediaUri, "photo");
                 startActivity(intent);
-           }
-            else if (requestCode == REQUEST_TAKE_VIDEO) {
-                Intent intent = new Intent (Intent.ACTION_VIEW, mMediaUri);
+            } else if (requestCode == REQUEST_TAKE_VIDEO) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, mMediaUri);
                 intent.setDataAndType(mMediaUri, "video/*");
                 startActivity(intent);
-            }
-            else if (resultCode == REQUEST_PICK_VIDEO) {
+            } else if (resultCode == REQUEST_PICK_VIDEO) {
                 if (data != null) {
                     Log.i(TAG, "Video content URI: " + data.getData());
                     Toast.makeText(this, "Video content URI: " + data.getData(), Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        else if (resultCode != RESULT_CANCELED) {
+        } else if (resultCode != RESULT_CANCELED) {
             Toast.makeText(this, "Sorry, there was an error!", Toast.LENGTH_LONG).show();
         }
 
@@ -316,7 +311,7 @@ public class MainActivity extends AppCompatActivity
 
                     isOpen = false;
 
-                }else {
+                } else {
                     fabPhoto.startAnimation(hide_fab);
                     fabVideo.startAnimation(hide_fab);
 
@@ -381,8 +376,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-
-
 //
 //                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                mMediaUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(),"fname_" +
@@ -393,7 +386,6 @@ public class MainActivity extends AppCompatActivity
 ////                intent = new Intent(MainActivity.this, CameraActivity.class);
 ////                startActivity(intent);
 
-
                 Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
                 startActivityForResult(takePhotoIntent, REQUEST_TAKE_PHOTO);
@@ -403,8 +395,6 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.",
                             Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
         fabPhoto.setOnClickListener(new View.OnClickListener() {
@@ -429,9 +419,8 @@ public class MainActivity extends AppCompatActivity
                 mMediaUri = getOutputMediaFileUri(MEDIA_TYPE_VIDEO);
                 if (mMediaUri == null) {
                     Toast.makeText(MainActivity.this, "There was a problem accessing your device's external storage.", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Intent takeVideoIntent = new Intent (MediaStore.ACTION_VIDEO_CAPTURE);
+                } else {
+                    Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUri);
                     takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 15);
                     startActivityForResult(takeVideoIntent, REQUEST_TAKE_VIDEO);
@@ -439,20 +428,22 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
     //this method will create and return the path to the image file
     private File getFile() {
         File folder = Environment.getExternalStoragePublicDirectory("/From_camera/images");// the file path
 
         //if it doesn't exist the folder will be created
-        if(!folder.exists())
-        {folder.mkdir();}
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_"+ timeStamp + "_";
+        String imageFileName = "JPEG_" + timeStamp + "_";
         File image_file = null;
 
         try {
-            image_file = File.createTempFile(imageFileName,".jpg",folder);
+            image_file = File.createTempFile(imageFileName, ".jpg", folder);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -460,7 +451,6 @@ public class MainActivity extends AppCompatActivity
         mCurrentPhotoPath = image_file.getAbsolutePath();
         return image_file;
     }
-
 
 
     private Uri getOutputMediaFileUri(int mediaType) {
@@ -491,21 +481,20 @@ public class MainActivity extends AppCompatActivity
                 Log.e(TAG, "Error creating file: " + mediaStorageDir.getAbsolutePath() + fileName + fileType);
             }
         }
-            // something went wrong
+        // something went wrong
         return null;
     }
 
-    private boolean isExternalStorageAvailable(){
+    private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    private void clickFab(){
+    private void clickFab() {
         fab.callOnClick();
     }
 
@@ -536,7 +525,6 @@ public class MainActivity extends AppCompatActivity
         return imageHelpers;
 
     }
-
 
 
     @Override
@@ -604,6 +592,8 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 
 //TODO THIS IS THE CODE TRYING TO FIX THE REQUEST PHOTO
 
