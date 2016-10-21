@@ -44,5 +44,8 @@ Nostalgia : a sentimental longing or wistful affection for the past, typically f
 
 ## Demos
 
-<img src ="https://github.com/RK-ic/Nostalgia/blob/master/detailview.gif" alt="First Page"  width="300" height="500"> 
+<img src ="https://github.com/RK-ic/Nostalgia/blob/master/detailview.gif" alt="First Page"  width="300" height="500">
+
+<img src ="https://github.com/RK-ic/Nostalgia/blob/master/detail.gif" alt="First Page"  width="300" height="500">
+
 
