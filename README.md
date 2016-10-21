@@ -32,10 +32,6 @@ Nostalgia : a sentimental longing or wistful affection for the past, typically f
 <img src ="https://github.com/Keyner32/Nostalgia/blob/master/Nostalgia%20.png" alt="First Page"  width="600" height="500"> 
 
 
-
-
-
-
 ## User Stories
 
 ##### - As a user, I want to _pictures_, so that I can _view them in a beautiful user interface_. 
@@ -45,3 +41,8 @@ Nostalgia : a sentimental longing or wistful affection for the past, typically f
 ##### - As a user, I want to _comment on a picture my friend posts_, so that I can _they can know I saw their picture_. 
 
 ##### - As a user, I want to _be able to share photos via social media_, so that I can _share my posts to followers on Facebook/Instagram(Twitter)_.
+
+## Demos
+
+<img src ="https://github.com/RK-ic/Nostalgia/blob/master/detailview.gif" alt="First Page"  width="300" height="500"> 
+
