@@ -29,7 +29,7 @@ public class SplashScreen extends AppCompatActivity {
         textView.setVisibility(View.INVISIBLE);
 
         Picasso.with(this)
-                .load("http://wpwallpaper.com/wp-content/uploads/wallpaper/AutumnPath.jpg")
+                .load("http://iphonewalls.net/wp-content/uploads/2014/08/Colorful%20Rain%20Bokeh%20Lights%20iPhone%205%20Wallpaper.jpg")
                 .fit()
                 .into(imageView);
         imageView.startAnimation(fade_in);

@@ -8,6 +8,8 @@
     tools:context="com.example.gabekeyner.nostalgia.MainActivity">
 
 
+
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -38,7 +40,7 @@
         android:layout_width="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -143,5 +145,6 @@
         android:adjustViewBounds="true"
         android:layout_width="70dp"
         android:layout_height="70dp" />
+
 
 </android.support.constraint.ConstraintLayout>
