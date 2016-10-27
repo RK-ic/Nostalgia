@@ -158,7 +158,6 @@ public class MainActivity extends AppCompatActivity
 
 
         System.out.println("MainActivity.onCreate: " + FirebaseInstanceId.getInstance().getToken());
-
         initViews();
         fabAnimations();
         fabClickable();
@@ -357,7 +356,6 @@ public class MainActivity extends AppCompatActivity
     private void clickFab() {
         fab.callOnClick();
     }
-
     //VIEWS
     private void initViews() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
